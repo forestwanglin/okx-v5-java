@@ -1,6 +1,5 @@
 package xyz.felh.okx.v5.ws;
 
-import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
 import okhttp3.WebSocket;
@@ -9,6 +8,16 @@ import okio.ByteString;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.felh.okx.v5.OkxWsApiService;
+import xyz.felh.okx.v5.entity.ws.pri.*;
+import xyz.felh.okx.v5.entity.ws.pub.Instruments;
+import xyz.felh.okx.v5.entity.ws.pub.OpenInterest;
+import xyz.felh.okx.v5.entity.ws.response.Event;
+import xyz.felh.okx.v5.entity.ws.response.IWsResponse;
+import xyz.felh.okx.v5.entity.ws.response.WsResponse;
+import xyz.felh.okx.v5.entity.ws.response.WsSubscribeResponse;
+import xyz.felh.okx.v5.entity.ws.response.pri.*;
+import xyz.felh.okx.v5.entity.ws.response.pub.InstrumentsArg;
+import xyz.felh.okx.v5.entity.ws.response.pub.OpenInterestArg;
 import xyz.felh.okx.v5.enumeration.WsChannel;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -51,7 +60,56 @@ public abstract class FelhWsListener extends WebSocketListener {
     public void onMessage(@NotNull WebSocket webSocket, @NotNull String text) {
         super.onMessage(webSocket, text);
         log.debug("WebSocket message: {} {}", wsChannel, text);
-        log.info("entity: {}", JSON.toJSONString(MessageExtractor.extract(text)));
+        IWsResponse response = MessageExtractor.extract(text);
+        if (response != null) {
+            if (okxWsApiService.getWsMessageListener() != null) {
+                if (response instanceof WsResponse<?>) {
+                    if (((WsResponse<?>) response).getEvent() == Event.ERROR) {
+                        okxWsApiService.getWsMessageListener().onOperateError((WsResponse<?>) response);
+                    } else if (((WsResponse<?>) response).getEvent() == Event.LOGIN) {
+                        okxWsApiService.getWsMessageListener().onLoginSuccess();
+                    } else {
+                        switch (((WsResponse<?>) response).getArg().getChannel()) {
+                            // private
+                            case ACCOUNT ->
+                                    okxWsApiService.getWsMessageListener().onOperateAccount((WsResponse<AccountArg>) response);
+                            case POSITIONS ->
+                                    okxWsApiService.getWsMessageListener().onOperatePositions((WsResponse<PositionsArg>) response);
+                            case BALANCE_AND_POSITION ->
+                                    okxWsApiService.getWsMessageListener().onOperateBalanceAndPosition((WsResponse<BalanceAndPositionArg>) response);
+                            case LIQUIDATION_WARNING ->
+                                    okxWsApiService.getWsMessageListener().onOperateLiquidationWarning((WsResponse<LiquidationWarningArg>) response);
+                            case ACCOUNT_GREEKS ->
+                                    okxWsApiService.getWsMessageListener().onOperateAccountGreeks((WsResponse<AccountGreeksArg>) response);
+                            // public
+                            case INSTRUMENTS ->
+                                    okxWsApiService.getWsMessageListener().onOperateInstruments((WsResponse<InstrumentsArg>) response);
+                            case OPEN_INTEREST ->
+                                    okxWsApiService.getWsMessageListener().onOperateOpenInterest((WsResponse<OpenInterestArg>) response);
+                        }
+                    }
+                } else if (response instanceof WsSubscribeResponse<?, ?>) {
+                    switch (((WsSubscribeResponse<?, ?>) response).getArg().getChannel()) {
+                        // private
+                        case ACCOUNT ->
+                                okxWsApiService.getWsMessageListener().onReceiveAccount((WsSubscribeResponse<AccountArg, Account>) response);
+                        case POSITIONS ->
+                                okxWsApiService.getWsMessageListener().onReceivePositions((WsSubscribeResponse<PositionsArg, Positions>) response);
+                        case BALANCE_AND_POSITION ->
+                                okxWsApiService.getWsMessageListener().onReceiveBalanceAndPosition((WsSubscribeResponse<BalanceAndPositionArg, BalanceAndPosition>) response);
+                        case LIQUIDATION_WARNING ->
+                                okxWsApiService.getWsMessageListener().onReceiveLiquidationWarning((WsSubscribeResponse<LiquidationWarningArg, LiquidationWarning>) response);
+                        case ACCOUNT_GREEKS ->
+                                okxWsApiService.getWsMessageListener().onReceiveAccountGreeks((WsSubscribeResponse<AccountGreeksArg, AccountGreeks>) response);
+                        // public
+                        case INSTRUMENTS ->
+                                okxWsApiService.getWsMessageListener().onReceiveInstruments((WsSubscribeResponse<InstrumentsArg, Instruments>) response);
+                        case OPEN_INTEREST ->
+                                okxWsApiService.getWsMessageListener().onReceiveOpenInterest((WsSubscribeResponse<OpenInterestArg, OpenInterest>) response);
+                    }
+                }
+            }
+        }
     }
 
     @Override

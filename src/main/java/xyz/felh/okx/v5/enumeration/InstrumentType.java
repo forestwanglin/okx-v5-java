@@ -1,4 +1,4 @@
-package xyz.felh.okx.v5.entity.ws;
+package xyz.felh.okx.v5.enumeration;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
@@ -26,7 +26,12 @@ public enum InstrumentType {
     /**
      * 期权
      */
-    OPTION("OPTION");
+    OPTION("OPTION"),
+
+    /**
+     * 全部
+     */
+    ANY("ANY");
 
     private final String value;
 

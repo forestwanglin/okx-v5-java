@@ -22,13 +22,11 @@ public class BusinessWsListener extends FelhWsListener {
     @Override
     public void onOpen(@NotNull WebSocket webSocket, @NotNull Response response) {
         super.onOpen(webSocket, response);
-        log.info("Business WebSocket opened");
     }
 
     @Override
     public void onMessage(@NotNull WebSocket webSocket, @NotNull String text) {
         super.onMessage(webSocket, text);
-        log.info("Business WebSocket message: {}", text);
     }
 
     @Override

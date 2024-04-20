@@ -5,7 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import xyz.felh.okx.v5.entity.ws.WsArg;
+import xyz.felh.okx.v5.entity.ws.WsSubUnsubArg;
 import xyz.felh.okx.v5.entity.ws.WsSubscribeEntity;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class WsSubscribeResponse<T extends WsArg, D extends WsSubscribeEntity> implements IWsResponse {
+public class WsSubscribeResponse<T extends WsSubUnsubArg, D extends WsSubscribeEntity> implements IWsResponse {
 
     @JSONField(name = "arg")
     @JsonProperty("arg")

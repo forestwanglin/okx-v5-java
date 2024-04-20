@@ -5,14 +5,14 @@ import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import xyz.felh.okx.v5.entity.ws.WsArg;
+import xyz.felh.okx.v5.entity.ws.WsSubUnsubArg;
 
 @ToString
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class WsResponse<T extends WsArg> implements IWsResponse {
+public class WsResponse<T extends WsSubUnsubArg> implements IWsResponse {
 
     @JSONField(name = "event")
     @JsonProperty("event")
@@ -48,6 +48,12 @@ public class WsResponse<T extends WsArg> implements IWsResponse {
         try {
             JSONObject json = JSON.parseObject(message);
             if (json.containsKey("event") && json.containsKey("arg")) {
+                return true;
+            }
+            if (json.containsKey("event") && Event.fromValue(json.getString("event")) == Event.ERROR) {
+                return true;
+            }
+            if (json.containsKey("event") && Event.fromValue(json.getString("event")) == Event.LOGIN) {
                 return true;
             }
         } catch (Exception ex) {

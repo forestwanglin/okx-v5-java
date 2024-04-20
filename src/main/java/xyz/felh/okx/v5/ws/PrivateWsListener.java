@@ -22,13 +22,11 @@ public class PrivateWsListener extends FelhWsListener {
     @Override
     public void onOpen(@NotNull WebSocket webSocket, @NotNull Response response) {
         super.onOpen(webSocket, response);
-        log.info("Private WebSocket opened");
     }
 
     @Override
     public void onMessage(@NotNull WebSocket webSocket, @NotNull String text) {
         super.onMessage(webSocket, text);
-        log.info("Private WebSocket message: {}", text);
     }
 
     @Override

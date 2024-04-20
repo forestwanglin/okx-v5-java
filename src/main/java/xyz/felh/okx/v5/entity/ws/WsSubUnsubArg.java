@@ -1,4 +1,4 @@
-package xyz.felh.okx.v5.entity.ws.request;
+package xyz.felh.okx.v5.entity.ws;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,23 +7,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import xyz.felh.okx.v5.entity.ws.WsArg;
+import xyz.felh.okx.v5.enumeration.Channel;
 
-import java.util.List;
-
-@ToString
 @Data
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
-public class WsRequest {
+public abstract class WsSubUnsubArg implements WsArg {
 
-    @JSONField(name = "op")
-    @JsonProperty("op")
-    private Operation op;
-
-    @JSONField(name = "args")
-    @JsonProperty("args")
-    private List<WsArg> args;
+    @JSONField(name = "channel")
+    @JsonProperty("channel")
+    private Channel channel;
 
 }

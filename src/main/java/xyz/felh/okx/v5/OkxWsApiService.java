@@ -1,18 +1,29 @@
 package xyz.felh.okx.v5;
 
+import com.alibaba.fastjson2.JSON;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.WebSocket;
 import okio.ByteString;
+import xyz.felh.okx.v5.entity.ws.request.Operation;
+import xyz.felh.okx.v5.entity.ws.request.WsRequest;
+import xyz.felh.okx.v5.entity.ws.request.WsRequestArg;
+import xyz.felh.okx.v5.entity.ws.request.pri.*;
+import xyz.felh.okx.v5.entity.ws.request.pub.InstrumentsArg;
+import xyz.felh.okx.v5.entity.ws.request.pub.OpenInterestArg;
 import xyz.felh.okx.v5.enumeration.WsChannel;
+import xyz.felh.okx.v5.util.SignUtils;
 import xyz.felh.okx.v5.ws.BusinessWsListener;
 import xyz.felh.okx.v5.ws.PrivateWsListener;
 import xyz.felh.okx.v5.ws.PublicWsListener;
 
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -31,6 +42,9 @@ public class OkxWsApiService {
     private final Map<WsChannel, WebSocket> wsClientMap;
     private final Map<WsChannel, Integer> reconnectCountMap;
     private final Map<WsChannel, Boolean> isConnectMap;
+    @Setter
+    @Getter
+    private WsMessageListener wsMessageListener;
 
     public OkxWsApiService() {
         this(false);
@@ -41,7 +55,6 @@ public class OkxWsApiService {
     }
 
     public OkxWsApiService(final OkHttpClient client, boolean simulated) {
-//        this.api = api;
         this.client = client;
         this.simulated = simulated;
         this.wsClientMap = new HashMap<>();
@@ -185,4 +198,120 @@ public class OkxWsApiService {
         wsClientMap.get(wsChannel).close(code, reason);
     }
 
+    // below is the api for business
+    private void subscribe(WsChannel wsChannel, WsRequestArg requestArg) {
+        WsRequest wsRequest = WsRequest.builder()
+                .op(Operation.SUBSCRIBE)
+                .args(List.of(requestArg)).build();
+        send(wsChannel, JSON.toJSONString(wsRequest));
+    }
+
+    private void unsubscribe(WsChannel wsChannel, WsRequestArg requestArg) {
+        WsRequest wsRequest = WsRequest.builder()
+                .op(Operation.UNSUBSCRIBE)
+                .args(List.of(requestArg)).build();
+        send(wsChannel, JSON.toJSONString(wsRequest));
+    }
+
+    //********************************** private channel
+    public void login(LoginArg loginArg, String secretKey) {
+        loginArg.setSign(SignUtils.sign(loginArg, secretKey));
+        WsRequest wsRequest = WsRequest.builder()
+                .op(Operation.LOGIN)
+                .args(List.of(loginArg)).build();
+        send(WsChannel.PRIVATE, JSON.toJSONString(wsRequest));
+    }
+
+    /**
+     * 账户频道
+     *
+     * @param accountArg arg
+     */
+    public void subscribeAccount(AccountArg accountArg) {
+        subscribe(WsChannel.PRIVATE, accountArg);
+    }
+
+    public void unsubscribeAccount(AccountArg accountArg) {
+        unsubscribe(WsChannel.PRIVATE, accountArg);
+    }
+
+    /**
+     * 持仓频道
+     *
+     * @param positionsArg
+     */
+    public void subscribePositions(PositionsArg positionsArg) {
+        subscribe(WsChannel.PRIVATE, positionsArg);
+    }
+
+    public void unsubscribePositions(PositionsArg positionsArg) {
+        unsubscribe(WsChannel.PRIVATE, positionsArg);
+    }
+
+    /**
+     * 账户余额和持仓频道
+     *
+     * @param balanceAndPositionArg arg
+     */
+    public void subscribeBalanceAndPosition(BalanceAndPositionArg balanceAndPositionArg) {
+        subscribe(WsChannel.PRIVATE, balanceAndPositionArg);
+    }
+
+    public void unsubscribeBalanceAndPosition(BalanceAndPositionArg balanceAndPositionArg) {
+        unsubscribe(WsChannel.PRIVATE, balanceAndPositionArg);
+    }
+
+    /**
+     * 爆仓风险预警推送频道
+     *
+     * @param liquidationWarningArg
+     */
+    public void subscribeLiquidationWarning(LiquidationWarningArg liquidationWarningArg) {
+        subscribe(WsChannel.PRIVATE, liquidationWarningArg);
+    }
+
+    public void unsubscribeLiquidationWarning(LiquidationWarningArg liquidationWarningArg) {
+        unsubscribe(WsChannel.PRIVATE, liquidationWarningArg);
+    }
+
+    /**
+     * 账户greeks频道
+     *
+     * @param accountGreeksArg
+     */
+    public void subscribeAccountGreeks(AccountGreeksArg accountGreeksArg) {
+        subscribe(WsChannel.PRIVATE, accountGreeksArg);
+    }
+
+    public void unsubscribeAccountGreeks(AccountGreeksArg accountGreeksArg) {
+        unsubscribe(WsChannel.PRIVATE, accountGreeksArg);
+    }
+
+    //********************************** public channel
+
+    /**
+     * 品频道
+     *
+     * @param instrumentsArg arg
+     */
+    public void subscribeInstruments(InstrumentsArg instrumentsArg) {
+        subscribe(WsChannel.PUBLIC, instrumentsArg);
+    }
+
+    public void unsubscribeInstruments(InstrumentsArg instrumentsArg) {
+        unsubscribe(WsChannel.PUBLIC, instrumentsArg);
+    }
+
+    /**
+     * 持仓总量频道
+     *
+     * @param openInterestArg arg
+     */
+    public void subscribeOpenInterest(OpenInterestArg openInterestArg) {
+        subscribe(WsChannel.PUBLIC, openInterestArg);
+    }
+
+    public void unsubscribeOpenInterest(OpenInterestArg openInterestArg) {
+        unsubscribe(WsChannel.PUBLIC, openInterestArg);
+    }
 }

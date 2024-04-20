@@ -12,7 +12,7 @@ public interface OkxConstants {
 
     String SIM_BASE_URL = "https://www.okx.com";
     String SIM_WS_PUBLIC_URL = "wss://wspap.okx.com:8443/ws/v5/public?brokerId=9999";
-    String SIM_WS_PRIVATE_URL = "wss://wspap.okx.com:8443/ws/v5/public?brokerId=9999";
+    String SIM_WS_PRIVATE_URL = "wss://wspap.okx.com:8443/ws/v5/private?brokerId=9999";
     String SIM_WS_BUSINESS_URL = "wss://wspap.okx.com:8443/ws/v5/business?brokerId=9999";
 
     /**

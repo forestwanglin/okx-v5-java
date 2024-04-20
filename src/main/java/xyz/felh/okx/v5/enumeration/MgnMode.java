@@ -1,18 +1,23 @@
-package xyz.felh.okx.v5.entity.ws.request;
+package xyz.felh.okx.v5.enumeration;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
-public enum Operation {
+public enum MgnMode {
 
-    LOGIN("login"),
-    SUBSCRIBE("subscribe"),
-    UNSUBSCRIBE("unsubscribe");
+    /**
+     * 全仓
+     */
+    CROSS("cross"),
+    /**
+     * 逐仓
+     */
+    ISOLATED("isolated");
 
     private final String value;
 
-    Operation(final String value) {
+    MgnMode(final String value) {
         this.value = value;
     }
 
@@ -20,5 +25,6 @@ public enum Operation {
     public String value() {
         return value;
     }
+
 
 }
