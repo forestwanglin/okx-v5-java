@@ -19,7 +19,7 @@ I am going to implement all apis on the official api document. [https://www.okx.
 
 <dependency>
     <groupId>xyz.felh</groupId>
-    <artifactId>service</artifactId>
+    <artifactId>okx-v5-java</artifactId>
     <version>0.1.2024042001</version>
 </dependency>
 ```
