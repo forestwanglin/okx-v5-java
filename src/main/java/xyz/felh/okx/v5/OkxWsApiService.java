@@ -12,6 +12,7 @@ import okio.ByteString;
 import xyz.felh.okx.v5.entity.ws.request.Operation;
 import xyz.felh.okx.v5.entity.ws.request.WsRequest;
 import xyz.felh.okx.v5.entity.ws.request.WsRequestArg;
+import xyz.felh.okx.v5.entity.ws.request.biz.*;
 import xyz.felh.okx.v5.entity.ws.request.pri.*;
 import xyz.felh.okx.v5.entity.ws.request.pub.InstrumentsArg;
 import xyz.felh.okx.v5.entity.ws.request.pub.OpenInterestArg;
@@ -164,6 +165,7 @@ public class OkxWsApiService {
     public void send(WsChannel wsChannel, final String message) {
         log.info("send message: {} {}", wsChannel, message);
         if (!isConnect(wsChannel)) {
+            log.info("websocket not connected: {}", wsChannel);
             return;
         }
         wsClientMap.get(wsChannel).send(message);
@@ -238,7 +240,7 @@ public class OkxWsApiService {
     /**
      * 持仓频道
      *
-     * @param positionsArg
+     * @param positionsArg positionsArg
      */
     public void subscribePositions(PositionsArg positionsArg) {
         subscribe(WsChannel.PRIVATE, positionsArg);
@@ -264,7 +266,7 @@ public class OkxWsApiService {
     /**
      * 爆仓风险预警推送频道
      *
-     * @param liquidationWarningArg
+     * @param liquidationWarningArg liquidationWarningArg
      */
     public void subscribeLiquidationWarning(LiquidationWarningArg liquidationWarningArg) {
         subscribe(WsChannel.PRIVATE, liquidationWarningArg);
@@ -277,7 +279,7 @@ public class OkxWsApiService {
     /**
      * 账户greeks频道
      *
-     * @param accountGreeksArg
+     * @param accountGreeksArg accountGreeksArg
      */
     public void subscribeAccountGreeks(AccountGreeksArg accountGreeksArg) {
         subscribe(WsChannel.PRIVATE, accountGreeksArg);
@@ -314,4 +316,73 @@ public class OkxWsApiService {
     public void unsubscribeOpenInterest(OpenInterestArg openInterestArg) {
         unsubscribe(WsChannel.PUBLIC, openInterestArg);
     }
+
+    //********************************** business channel
+
+    /**
+     * 充值信息频道
+     *
+     * @param depositInfoArg depositInfoArg
+     */
+    public void subscribeDepositInfo(DepositInfoArg depositInfoArg) {
+        subscribe(WsChannel.BUSINESS, depositInfoArg);
+    }
+
+    public void unsubscribeDepositInfo(DepositInfoArg depositInfoArg) {
+        unsubscribe(WsChannel.BUSINESS, depositInfoArg);
+    }
+
+    /**
+     * 提币信息频道
+     *
+     * @param withdrawalInfoArg withdrawalInfoArg
+     */
+    public void subscribeWithdrawalInfo(WithdrawalInfoArg withdrawalInfoArg) {
+        subscribe(WsChannel.BUSINESS, withdrawalInfoArg);
+    }
+
+    public void unsubscribeWithdrawalInfo(WithdrawalInfoArg withdrawalInfoArg) {
+        unsubscribe(WsChannel.BUSINESS, withdrawalInfoArg);
+    }
+
+    /**
+     * 标记价格K线频道
+     *
+     * @param markPriceCandleArg markPriceCandleArg
+     */
+    public void subscribeMarkPriceCandle(MarkPriceCandleArg markPriceCandleArg) {
+        subscribe(WsChannel.BUSINESS, markPriceCandleArg);
+    }
+
+    public void unsubscribeMarkPriceCandle(MarkPriceCandleArg markPriceCandleArg) {
+        unsubscribe(WsChannel.BUSINESS, markPriceCandleArg);
+    }
+
+    /**
+     * 指数K线频道
+     *
+     * @param indexCandleArg indexCandleArg
+     */
+    public void subscribeIndexCandle(IndexCandleArg indexCandleArg) {
+        subscribe(WsChannel.BUSINESS, indexCandleArg);
+    }
+
+    public void unsubscribeIndexCandle(IndexCandleArg indexCandleArg) {
+        unsubscribe(WsChannel.BUSINESS, indexCandleArg);
+    }
+
+    /**
+     * 经济日历频道
+     *
+     * @param economicCalendarArg economicCalendarArg
+     */
+    public void subscribeEconomicCalendar(EconomicCalendarArg economicCalendarArg) {
+        subscribe(WsChannel.BUSINESS, economicCalendarArg);
+    }
+
+    public void unsubscribeEconomicCalendar(EconomicCalendarArg economicCalendarArg) {
+        unsubscribe(WsChannel.BUSINESS, economicCalendarArg);
+    }
+
+
 }

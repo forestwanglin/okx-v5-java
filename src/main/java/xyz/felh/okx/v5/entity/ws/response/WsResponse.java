@@ -1,18 +1,19 @@
 package xyz.felh.okx.v5.entity.ws.response;
 
-import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.TypeReference;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import xyz.felh.okx.v5.entity.ws.WsSubUnsubArg;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @ToString
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class WsResponse<T extends WsSubUnsubArg> implements IWsResponse {
+public class WsResponse<T> implements IWsResponse {
 
     @JSONField(name = "event")
     @JsonProperty("event")
@@ -43,22 +44,25 @@ public class WsResponse<T extends WsSubUnsubArg> implements IWsResponse {
     @JsonProperty("msg")
     private String msg;
 
-    @Override
-    public boolean ofInstance(String message) {
+    public WsResponse<T> tryParse(Class<T> tClass, String message) {
         try {
-            JSONObject json = JSON.parseObject(message);
-            if (json.containsKey("event") && json.containsKey("arg")) {
-                return true;
-            }
-            if (json.containsKey("event") && Event.fromValue(json.getString("event")) == Event.ERROR) {
-                return true;
-            }
-            if (json.containsKey("event") && Event.fromValue(json.getString("event")) == Event.LOGIN) {
-                return true;
+            WsResponse<JSONObject> response = JSONObject.parseObject(message, new TypeReference<>() {
+            });
+            if (response != null
+                    && response.getEvent() != null
+                    && response.getArg() != null
+                    && (response.getEvent() == Event.SUBSCRIBE || response.getEvent() == Event.UNSUBSCRIBE)) {
+                WsResponse<T> result = new WsResponse<>();
+                result.setCode(response.getCode());
+                result.setMsg(response.getMsg());
+                result.setEvent(response.getEvent());
+                result.setConnId(response.getConnId());
+                result.setArg(JSONObject.parseObject(response.getArg().toString(), tClass));
+                return result;
             }
         } catch (Exception ex) {
-            //
+            log.error("tryParse error", ex);
         }
-        return false;
+        return null;
     }
 }

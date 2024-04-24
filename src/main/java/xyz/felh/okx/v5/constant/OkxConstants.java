@@ -47,4 +47,8 @@ public interface OkxConstants {
     String HEARTBEAT_RSP_MESSAGE = "pong";
     int HEARTBEAT_INTERVAL_SEC = 25;
 
+    // 订阅消息中的常量
+    String RSP_CHANNEL = "channel";
+    String RSP_ARG = "arg";
+
 }

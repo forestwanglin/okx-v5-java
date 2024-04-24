@@ -8,23 +8,19 @@ import okio.ByteString;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.felh.okx.v5.OkxWsApiService;
-import xyz.felh.okx.v5.entity.ws.pri.*;
-import xyz.felh.okx.v5.entity.ws.pub.Instruments;
-import xyz.felh.okx.v5.entity.ws.pub.OpenInterest;
-import xyz.felh.okx.v5.entity.ws.response.Event;
-import xyz.felh.okx.v5.entity.ws.response.IWsResponse;
-import xyz.felh.okx.v5.entity.ws.response.WsResponse;
-import xyz.felh.okx.v5.entity.ws.response.WsSubscribeResponse;
-import xyz.felh.okx.v5.entity.ws.response.pri.*;
-import xyz.felh.okx.v5.entity.ws.response.pub.InstrumentsArg;
-import xyz.felh.okx.v5.entity.ws.response.pub.OpenInterestArg;
+import xyz.felh.okx.v5.entity.ws.WsSubscribeEntity;
+import xyz.felh.okx.v5.entity.ws.response.CommonResponse;
+import xyz.felh.okx.v5.entity.ws.response.ErrorResponse;
+import xyz.felh.okx.v5.entity.ws.response.LoginResponse;
+import xyz.felh.okx.v5.entity.ws.response.WsResponseArg;
 import xyz.felh.okx.v5.enumeration.WsChannel;
+import xyz.felh.okx.v5.handler.WsSubscribeEntityHandler;
+import xyz.felh.okx.v5.handler.WsSubscribeEntityHandlerFactory;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import static xyz.felh.okx.v5.constant.OkxConstants.HEARTBEAT_INTERVAL_SEC;
-import static xyz.felh.okx.v5.constant.OkxConstants.HEARTBEAT_REQ_MESSAGE;
+import static xyz.felh.okx.v5.constant.OkxConstants.*;
 
 /**
  * felh ws listener
@@ -42,7 +38,6 @@ public abstract class FelhWsListener extends WebSocketListener {
 
     @Override
     public void onOpen(@NotNull WebSocket webSocket, @NotNull Response response) {
-        super.onOpen(webSocket, response);
         log.info("WebSocket opened {}", wsChannel);
         okxWsApiService.setWebSocket(wsChannel, webSocket);
         okxWsApiService.resetConnectCount(wsChannel);
@@ -57,70 +52,37 @@ public abstract class FelhWsListener extends WebSocketListener {
     }
 
     @Override
-    public void onMessage(@NotNull WebSocket webSocket, @NotNull String text) {
-        super.onMessage(webSocket, text);
-        log.debug("WebSocket message: {} {}", wsChannel, text);
-        IWsResponse response = MessageExtractor.extract(text);
-        if (response != null) {
-            if (okxWsApiService.getWsMessageListener() != null) {
-                if (response instanceof WsResponse<?>) {
-                    if (((WsResponse<?>) response).getEvent() == Event.ERROR) {
-                        okxWsApiService.getWsMessageListener().onOperateError((WsResponse<?>) response);
-                    } else if (((WsResponse<?>) response).getEvent() == Event.LOGIN) {
-                        okxWsApiService.getWsMessageListener().onLoginSuccess();
-                    } else {
-                        switch (((WsResponse<?>) response).getArg().getChannel()) {
-                            // private
-                            case ACCOUNT ->
-                                    okxWsApiService.getWsMessageListener().onOperateAccount((WsResponse<AccountArg>) response);
-                            case POSITIONS ->
-                                    okxWsApiService.getWsMessageListener().onOperatePositions((WsResponse<PositionsArg>) response);
-                            case BALANCE_AND_POSITION ->
-                                    okxWsApiService.getWsMessageListener().onOperateBalanceAndPosition((WsResponse<BalanceAndPositionArg>) response);
-                            case LIQUIDATION_WARNING ->
-                                    okxWsApiService.getWsMessageListener().onOperateLiquidationWarning((WsResponse<LiquidationWarningArg>) response);
-                            case ACCOUNT_GREEKS ->
-                                    okxWsApiService.getWsMessageListener().onOperateAccountGreeks((WsResponse<AccountGreeksArg>) response);
-                            // public
-                            case INSTRUMENTS ->
-                                    okxWsApiService.getWsMessageListener().onOperateInstruments((WsResponse<InstrumentsArg>) response);
-                            case OPEN_INTEREST ->
-                                    okxWsApiService.getWsMessageListener().onOperateOpenInterest((WsResponse<OpenInterestArg>) response);
-                        }
-                    }
-                } else if (response instanceof WsSubscribeResponse<?, ?>) {
-                    switch (((WsSubscribeResponse<?, ?>) response).getArg().getChannel()) {
-                        // private
-                        case ACCOUNT ->
-                                okxWsApiService.getWsMessageListener().onReceiveAccount((WsSubscribeResponse<AccountArg, Account>) response);
-                        case POSITIONS ->
-                                okxWsApiService.getWsMessageListener().onReceivePositions((WsSubscribeResponse<PositionsArg, Positions>) response);
-                        case BALANCE_AND_POSITION ->
-                                okxWsApiService.getWsMessageListener().onReceiveBalanceAndPosition((WsSubscribeResponse<BalanceAndPositionArg, BalanceAndPosition>) response);
-                        case LIQUIDATION_WARNING ->
-                                okxWsApiService.getWsMessageListener().onReceiveLiquidationWarning((WsSubscribeResponse<LiquidationWarningArg, LiquidationWarning>) response);
-                        case ACCOUNT_GREEKS ->
-                                okxWsApiService.getWsMessageListener().onReceiveAccountGreeks((WsSubscribeResponse<AccountGreeksArg, AccountGreeks>) response);
-                        // public
-                        case INSTRUMENTS ->
-                                okxWsApiService.getWsMessageListener().onReceiveInstruments((WsSubscribeResponse<InstrumentsArg, Instruments>) response);
-                        case OPEN_INTEREST ->
-                                okxWsApiService.getWsMessageListener().onReceiveOpenInterest((WsSubscribeResponse<OpenInterestArg, OpenInterest>) response);
-                    }
-                }
+    public void onMessage(@NotNull WebSocket webSocket, @NotNull String message) {
+        log.debug("WebSocket message: {} {}", wsChannel, message);
+        if (HEARTBEAT_RSP_MESSAGE.equals(message)) {
+            log.debug("WebSocket heartbeat response {}", message);
+        } else {
+            // error message
+            CommonResponse errorResponse = new ErrorResponse().tryParse(message);
+            if (errorResponse != null) {
+                okxWsApiService.getWsMessageListener().onOperateError((ErrorResponse) errorResponse);
+            }
+            // login message
+            CommonResponse loginResponse = new LoginResponse().tryParse(message);
+            if (loginResponse != null) {
+                okxWsApiService.getWsMessageListener().onLoginSuccess();
+            }
+            // response and subscribe response
+            WsSubscribeEntityHandler<? extends WsResponseArg, ? extends WsSubscribeEntity> handler
+                    = WsSubscribeEntityHandlerFactory.getHandler(message);
+            if (handler != null) {
+                handler.handle(okxWsApiService.getWsMessageListener());
             }
         }
     }
 
     @Override
     public void onMessage(@NotNull WebSocket webSocket, @NotNull ByteString bytes) {
-        super.onMessage(webSocket, bytes);
         log.info("WebSocket bytes message: {} {}", wsChannel, bytes);
     }
 
     @Override
     public void onClosed(@NotNull WebSocket webSocket, int code, @NotNull String reason) {
-        super.onClosed(webSocket, code, reason);
         log.info("onClosed: {} {} {} {}", wsChannel, webSocket, code, reason);
         okxWsApiService.setWebSocket(wsChannel, null);
         okxWsApiService.resetConnectCount(wsChannel);
@@ -129,7 +91,6 @@ public abstract class FelhWsListener extends WebSocketListener {
 
     @Override
     public void onClosing(@NotNull WebSocket webSocket, int code, @NotNull String reason) {
-        super.onClosing(webSocket, code, reason);
         log.info("onClosing: {} {} {} {}", wsChannel, webSocket, code, reason);
         okxWsApiService.setWebSocket(wsChannel, null);
         okxWsApiService.resetConnectCount(wsChannel);
@@ -138,7 +99,6 @@ public abstract class FelhWsListener extends WebSocketListener {
 
     @Override
     public void onFailure(@NotNull WebSocket webSocket, @NotNull Throwable t, @Nullable Response response) {
-        super.onFailure(webSocket, t, response);
         log.info("onFailure: {} {} {} {}", wsChannel, webSocket, t, response);
         okxWsApiService.setWebSocket(wsChannel, null);
         okxWsApiService.resetConnectCount(wsChannel);
