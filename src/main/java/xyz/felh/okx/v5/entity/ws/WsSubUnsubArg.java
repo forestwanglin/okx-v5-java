@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import xyz.felh.okx.v5.enumeration.Channel;
+import xyz.felh.okx.v5.enumeration.ws.Channel;
 
 @Data
 @ToString

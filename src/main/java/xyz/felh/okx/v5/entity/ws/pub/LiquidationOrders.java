@@ -5,8 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import xyz.felh.okx.v5.entity.ws.WsSubscribeEntity;
-import xyz.felh.okx.v5.enumeration.InstrumentType;
 import xyz.felh.okx.v5.enumeration.PositionsSide;
+import xyz.felh.okx.v5.enumeration.Side;
+import xyz.felh.okx.v5.enumeration.ws.InstrumentType;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -59,7 +60,7 @@ public class LiquidationOrders implements WsSubscribeEntity {
          */
         @JSONField(name = "side")
         @JsonProperty("side")
-        private String side;
+        private Side side;
 
         /**
          * 持仓方向

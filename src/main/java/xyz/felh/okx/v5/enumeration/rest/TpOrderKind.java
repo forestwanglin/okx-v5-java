@@ -1,23 +1,17 @@
-package xyz.felh.okx.v5.enumeration;
+package xyz.felh.okx.v5.enumeration.rest;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
-public enum MgnMode {
+public enum TpOrderKind {
 
-    /**
-     * 全仓
-     */
-    CROSS("cross"),
-    /**
-     * 逐仓
-     */
-    ISOLATED("isolated");
+    CONDITION("condition"),
+    LIMIT("limit");
 
     private final String value;
 
-    MgnMode(final String value) {
+    TpOrderKind(final String value) {
         this.value = value;
     }
 
@@ -25,6 +19,5 @@ public enum MgnMode {
     public String value() {
         return value;
     }
-
 
 }

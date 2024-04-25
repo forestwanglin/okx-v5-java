@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import xyz.felh.okx.v5.enumeration.Channel;
+import xyz.felh.okx.v5.enumeration.ws.Channel;
 import xyz.felh.okx.v5.entity.ws.request.WsRequestArg;
 
 @EqualsAndHashCode(callSuper = true)

@@ -16,7 +16,7 @@ import xyz.felh.okx.v5.entity.ws.request.biz.*;
 import xyz.felh.okx.v5.entity.ws.request.pri.*;
 import xyz.felh.okx.v5.entity.ws.request.pub.InstrumentsArg;
 import xyz.felh.okx.v5.entity.ws.request.pub.OpenInterestArg;
-import xyz.felh.okx.v5.enumeration.WsChannel;
+import xyz.felh.okx.v5.enumeration.ws.WsChannel;
 import xyz.felh.okx.v5.util.SignUtils;
 import xyz.felh.okx.v5.ws.BusinessWsListener;
 import xyz.felh.okx.v5.ws.PrivateWsListener;
@@ -217,7 +217,7 @@ public class OkxWsApiService {
 
     //********************************** private channel
     public void login(LoginArg loginArg, String secretKey) {
-        loginArg.setSign(SignUtils.sign(loginArg, secretKey));
+        loginArg.setSign(SignUtils.signWebsocket(loginArg, secretKey));
         WsRequest wsRequest = WsRequest.builder()
                 .op(Operation.LOGIN)
                 .args(List.of(loginArg)).build();

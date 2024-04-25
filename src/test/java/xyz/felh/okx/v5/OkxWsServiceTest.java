@@ -10,15 +10,14 @@ import xyz.felh.okx.v5.entity.ws.pub.OpenInterest;
 import xyz.felh.okx.v5.entity.ws.request.Operation;
 import xyz.felh.okx.v5.entity.ws.request.WsRequest;
 import xyz.felh.okx.v5.entity.ws.request.biz.IndexCandleArg;
-import xyz.felh.okx.v5.entity.ws.request.pri.LoginArg;
 import xyz.felh.okx.v5.entity.ws.request.pub.InstrumentsArg;
 import xyz.felh.okx.v5.entity.ws.request.pub.OpenInterestArg;
 import xyz.felh.okx.v5.entity.ws.response.ErrorResponse;
 import xyz.felh.okx.v5.entity.ws.response.WsResponse;
 import xyz.felh.okx.v5.entity.ws.response.WsSubscribeResponse;
-import xyz.felh.okx.v5.enumeration.Channel;
-import xyz.felh.okx.v5.enumeration.InstrumentType;
-import xyz.felh.okx.v5.enumeration.WsChannel;
+import xyz.felh.okx.v5.enumeration.ws.Channel;
+import xyz.felh.okx.v5.enumeration.ws.InstrumentType;
+import xyz.felh.okx.v5.enumeration.ws.WsChannel;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

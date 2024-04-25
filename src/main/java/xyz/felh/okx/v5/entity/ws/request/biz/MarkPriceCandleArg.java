@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import xyz.felh.okx.v5.entity.ws.request.WsRequestArg;
-import xyz.felh.okx.v5.enumeration.Channel;
 
 
 @EqualsAndHashCode(callSuper = true)

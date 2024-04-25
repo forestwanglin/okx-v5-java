@@ -13,7 +13,7 @@ import xyz.felh.okx.v5.entity.ws.response.pri.AccountGreeksArg;
 import xyz.felh.okx.v5.entity.ws.response.pri.BalanceAndPositionArg;
 import xyz.felh.okx.v5.entity.ws.response.pri.PositionsArg;
 import xyz.felh.okx.v5.entity.ws.response.pub.*;
-import xyz.felh.okx.v5.enumeration.Channel;
+import xyz.felh.okx.v5.enumeration.ws.Channel;
 
 import static xyz.felh.okx.v5.constant.OkxConstants.RSP_ARG;
 import static xyz.felh.okx.v5.constant.OkxConstants.RSP_CHANNEL;

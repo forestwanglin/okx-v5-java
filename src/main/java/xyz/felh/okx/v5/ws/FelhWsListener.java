@@ -13,7 +13,7 @@ import xyz.felh.okx.v5.entity.ws.response.CommonResponse;
 import xyz.felh.okx.v5.entity.ws.response.ErrorResponse;
 import xyz.felh.okx.v5.entity.ws.response.LoginResponse;
 import xyz.felh.okx.v5.entity.ws.response.WsResponseArg;
-import xyz.felh.okx.v5.enumeration.WsChannel;
+import xyz.felh.okx.v5.enumeration.ws.WsChannel;
 import xyz.felh.okx.v5.handler.WsSubscribeEntityHandler;
 import xyz.felh.okx.v5.handler.WsSubscribeEntityHandlerFactory;
 
@@ -70,9 +70,7 @@ public abstract class FelhWsListener extends WebSocketListener {
             // response and subscribe response
             WsSubscribeEntityHandler<? extends WsResponseArg, ? extends WsSubscribeEntity> handler
                     = WsSubscribeEntityHandlerFactory.getHandler(message);
-            if (handler != null) {
-                handler.handle(okxWsApiService.getWsMessageListener());
-            }
+            handler.handle(okxWsApiService.getWsMessageListener());
         }
     }
 

@@ -11,7 +11,21 @@ import java.util.Base64;
 @Slf4j
 public class SignUtils {
 
-    public static String sign(LoginArg loginArg, String secretKey) {
+    public static String signRest(String secretKey, String timestamp, String method, String path, String body) {
+        String str = String.format("%s%s%s%s",
+                timestamp, // timestamp
+                method,  // method GET/POST
+                path, // requestPath
+                body // body
+        );
+        try {
+            return Base64.getEncoder().encodeToString(hmacSHA256(secretKey.getBytes(), str.getBytes()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String signWebsocket(LoginArg loginArg, String secretKey) {
         String str = String.format("%s%s%s",
                 loginArg.getTimestamp(),
                 "GET",
@@ -29,7 +43,7 @@ public class SignUtils {
      * @param key     加密的键，可以是任何数据
      * @param content 待加密的内容
      * @return 加密后的内容
-     * @throws Exception
+     * @throws Exception ex
      */
     public static byte[] hmacSHA256(byte[] key, byte[] content) throws Exception {
         Mac hmacSha256 = Mac.getInstance("HmacSHA256");

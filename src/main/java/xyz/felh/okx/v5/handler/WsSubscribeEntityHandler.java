@@ -6,7 +6,7 @@ import xyz.felh.okx.v5.entity.ws.WsSubscribeEntity;
 import xyz.felh.okx.v5.entity.ws.response.WsResponse;
 import xyz.felh.okx.v5.entity.ws.response.WsResponseArg;
 import xyz.felh.okx.v5.entity.ws.response.WsSubscribeResponse;
-import xyz.felh.okx.v5.enumeration.Channel;
+import xyz.felh.okx.v5.enumeration.ws.Channel;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

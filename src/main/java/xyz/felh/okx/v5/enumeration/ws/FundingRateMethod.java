@@ -1,23 +1,23 @@
-package xyz.felh.okx.v5.enumeration;
+package xyz.felh.okx.v5.enumeration.ws;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
-public enum FundingRateSettleState {
+public enum FundingRateMethod {
 
     /**
-     * 结算中
+     * 当期收
      */
-    PROCESSING("processing"),
+    CURRENT_PERIOD("current_period"),
     /**
-     * 已结算
+     * 跨期收
      */
-    SETTLED("settled");
+    NEXT_PERIOD("next_period");
 
     private final String value;
 
-    FundingRateSettleState(final String value) {
+    FundingRateMethod(final String value) {
         this.value = value;
     }
 

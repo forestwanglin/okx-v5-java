@@ -7,7 +7,7 @@ import okio.ByteString;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.felh.okx.v5.OkxWsApiService;
-import xyz.felh.okx.v5.enumeration.WsChannel;
+import xyz.felh.okx.v5.enumeration.ws.WsChannel;
 
 /**
  * private channel ws listener

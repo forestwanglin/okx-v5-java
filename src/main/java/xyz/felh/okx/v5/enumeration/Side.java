@@ -4,20 +4,20 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
-public enum FundingRateMethod {
+public enum Side {
 
     /**
-     * 当期收
+     * 买
      */
-    CURRENT_PERIOD("current_period"),
+    BUY("buy"),
     /**
-     * 跨期收
+     * 卖
      */
-    NEXT_PERIOD("next_period");
+    SELL("sell");
 
     private final String value;
 
-    FundingRateMethod(final String value) {
+    Side(final String value) {
         this.value = value;
     }
 
@@ -25,6 +25,5 @@ public enum FundingRateMethod {
     public String value() {
         return value;
     }
-
 
 }

@@ -51,4 +51,7 @@ public interface OkxConstants {
     String RSP_CHANNEL = "channel";
     String RSP_ARG = "arg";
 
+    // common
+    String EMPTY = "";
+
 }

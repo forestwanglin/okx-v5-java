@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import xyz.felh.okx.v5.entity.ws.WsSubscribeEntity;
-import xyz.felh.okx.v5.enumeration.FundingRateMethod;
-import xyz.felh.okx.v5.enumeration.FundingRateSettleState;
-import xyz.felh.okx.v5.enumeration.InstrumentType;
+import xyz.felh.okx.v5.enumeration.ws.FundingRateMethod;
+import xyz.felh.okx.v5.enumeration.ws.FundingRateSettleState;
+import xyz.felh.okx.v5.enumeration.ws.InstrumentType;
 
 import java.math.BigDecimal;
 
