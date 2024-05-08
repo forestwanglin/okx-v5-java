@@ -1,12 +1,12 @@
 # okx-v5-java
-[![GitHub version](https://img.shields.io/static/v1?label=version&message=v0.2.2024042501&color=blue)](https://github.com/forestwanglin/openai-java)
+[![GitHub version](https://img.shields.io/static/v1?label=version&message=v0.2.2024050801&color=blue)](https://github.com/forestwanglin/openai-java)
 [![License](https://img.shields.io/static/v1?label=license&message=MIT&color=orange)](https://github.com/forestwanglin/okx-v5-java/blob/main/LICENSE)
 
 OKX v5 SDK for JAVA. 
 
-I am going to implement all apis on the official api document. [https://www.okx.com/docs-v5/en/#overview](https://www.okx.com/docs-v5/en/#overview)
+I am going to implement all APIs on the [official api document](https://www.okx.com/docs-v5/en/#overview).
 
-## API STATUS
+## SDK API STATUS
 - ### Rest API
   - [Trading Account](https://www.okx.com/docs-v5/en/#trading-account-rest-api)
     - [x] [Get Balance](https://www.okx.com/docs-v5/en/#trading-account-rest-api-get-balance)
@@ -19,7 +19,7 @@ I am going to implement all apis on the official api document. [https://www.okx.
     - [ ] [Set position mode](https://www.okx.com/docs-v5/en/#trading-account-rest-api-set-position-mode)
     - [ ] [Set leverage](https://www.okx.com/docs-v5/en/#trading-account-rest-api-set-leverage)
     - [ ] [Get maximum buy/sell amount or open amount](https://www.okx.com/docs-v5/en/#trading-account-rest-api-get-maximum-buy-sell-amount-or-open-amount)
-    - ...
+    - [ ] ...
   - [Order Book Trading](https://www.okx.com/docs-v5/en/#order-book-trading)
     - [Trade](https://www.okx.com/docs-v5/en/#order-book-trading-trade)
       - [x] [POST / Place order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-post-place-order)
@@ -29,7 +29,7 @@ I am going to implement all apis on the official api document. [https://www.okx.
       - [ ] [POST / Amend order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-post-amend-order)
       - [ ] [POST / Amend multiple orders](https://www.okx.com/docs-v5/en/#order-book-trading-trade-post-amend-multiple-orders)
       - [ ] [POST / Close positions](https://www.okx.com/docs-v5/en/#order-book-trading-trade-post-close-positions)
-      - ...
+      - [ ] ...
 - ### Websocket API
   - [Trading Account](https://www.okx.com/docs-v5/zh/#trading-account-websocket)
     - [x] [Account channel](https://www.okx.com/docs-v5/en/#trading-account-websocket-account-channel)
@@ -37,6 +37,19 @@ I am going to implement all apis on the official api document. [https://www.okx.
     - [x] [Balance and position channel](https://www.okx.com/docs-v5/en/#trading-account-websocket-balance-and-position-channel)
     - [x] [Position risk warning](https://www.okx.com/docs-v5/en/#trading-account-websocket-position-risk-warning)
     - [x] [Account greeks channel](https://www.okx.com/docs-v5/en/#trading-account-websocket-account-greeks-channel)
+  - [Order Book Trading](https://www.okx.com/docs-v5/en/#order-book-trading)
+    - [Trade](https://www.okx.com/docs-v5/en/#order-book-trading-trade)
+      - [x] [WS / Order channel](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-order-channel)
+      - [ ] [WS / Place order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-place-order)
+      - [ ] [WS / Place multiple orders](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-place-multiple-orders)
+      - [ ] [WS / Cancel order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-cancel-order)
+      - [ ] [WS / Cancel multiple orders](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-cancel-multiple-orders)
+      - [ ] [WS / Amend order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-amend-order)
+      - [ ] [WS / Amend multiple orders](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-amend-multiple-orders)
+      - [ ] [WS / Mass cancel order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-mass-cancel-order)
+    - [Algo Trading](https://www.okx.com/docs-v5/en/#order-book-trading-algo-trading)
+      - [ ] [WS / Algo orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-algo-trading-ws-algo-orders-channel)
+      - [ ] [WS / Advance algo orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-algo-trading-ws-advance-algo-orders-channel)
   - [Public Data](https://www.okx.com/docs-v5/en/#public-data-websocket)
     - [x] [Instruments channel](https://www.okx.com/docs-v5/en/#public-data-websocket-instruments-channel)
     - [x] [Open interest channel](https://www.okx.com/docs-v5/en/#public-data-websocket-open-interest-channel)
@@ -64,21 +77,26 @@ I am going to implement all apis on the official api document. [https://www.okx.
 <dependency>
     <groupId>xyz.felh</groupId>
     <artifactId>okx-v5-java</artifactId>
-    <version>0.2.2024042501</version>
+    <version>0.2.2024050801</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```yaml
-implementation group: 'xyz.felh', name: 'okx-v5-java', version: '0.2.2024042501'
+implementation group: 'xyz.felh', name: 'okx-v5-java', version: '0.2.2024050801'
 ```
 
 ### sbt
 
 ```javascript
-libraryDependencies += "xyz.felh" % "okx-v5-java" % "0.2.2024042501"
+libraryDependencies += "xyz.felh" % "okx-v5-java" % "0.2.2024050801"
 ```
+
+## Important
+
+- ##### Automatically login when reconnected websocket if it has been login to PRIVATE channel
+- ##### Automatically restore all subscribe channels when reconnected websocket
 
 
 ## License

@@ -37,7 +37,11 @@ public enum OrderType {
     /**
      * 做市商保护且只做maker单(仅适用于组合保证金账户模式下的期权订单)
      */
-    MMP_AND_POST_ONLY("mmp_and_post_only");
+    MMP_AND_POST_ONLY("mmp_and_post_only"),
+    /**
+     * 期权简选（全部成交或立即取消）
+     */
+    OP_FOK("op_fok");
 
 
     private final String value;

@@ -8,8 +8,9 @@ import xyz.felh.okx.v5.enumeration.OrderType;
 import xyz.felh.okx.v5.enumeration.PositionsSide;
 import xyz.felh.okx.v5.enumeration.Side;
 import xyz.felh.okx.v5.enumeration.TriggerPxType;
-import xyz.felh.okx.v5.enumeration.rest.StpMode;
-import xyz.felh.okx.v5.enumeration.rest.TpOrderKind;
+import xyz.felh.okx.v5.enumeration.StpMode;
+import xyz.felh.okx.v5.enumeration.TpOrderKind;
+import xyz.felh.okx.v5.enumeration.ws.TdMode;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -38,7 +39,7 @@ public class PlaceOrderReq implements IOkxRestReq {
     @NonNull
     @JSONField(name = "tdMode")
     @JsonProperty("tdMode")
-    private String tdMode;
+    private TdMode tdMode;
 
     /**
      * 保证金币种，仅适用于单币种保证金模式下的全仓杠杆订单

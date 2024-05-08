@@ -4,15 +4,6 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import xyz.felh.okx.v5.entity.rest.IOkxRestReq;
-import xyz.felh.okx.v5.enumeration.OrderType;
-import xyz.felh.okx.v5.enumeration.PositionsSide;
-import xyz.felh.okx.v5.enumeration.Side;
-import xyz.felh.okx.v5.enumeration.TriggerPxType;
-import xyz.felh.okx.v5.enumeration.rest.StpMode;
-import xyz.felh.okx.v5.enumeration.rest.TpOrderKind;
-
-import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 @ToString

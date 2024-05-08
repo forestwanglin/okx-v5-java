@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import xyz.felh.okx.v5.entity.ws.WsSubscribeEntity;
+import xyz.felh.okx.v5.enumeration.ws.AdlWarningState;
 import xyz.felh.okx.v5.enumeration.ws.InstrumentType;
 
 import java.math.BigDecimal;
@@ -39,7 +40,7 @@ public class AdlWarning implements WsSubscribeEntity {
      */
     @JSONField(name = "state")
     @JsonProperty("state")
-    private String state;
+    private AdlWarningState state;
 
     /**
      * 实时风险准备金余额

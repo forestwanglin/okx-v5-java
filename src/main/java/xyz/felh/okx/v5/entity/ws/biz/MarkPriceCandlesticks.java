@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
-public class MarkPriceCandle implements WsSubscribeEntity {
+public class MarkPriceCandlesticks implements WsSubscribeEntity {
 
     /**
      * 开始时间，Unix时间戳的毫秒数格式，如 1597026383085

@@ -109,6 +109,11 @@ public enum Channel {
      */
     ACCOUNT_GREEKS("account-greeks", "onOperateAccountGreeks", "onReceiveAccountGreeks"),
 
+    /**
+     *获取订单信息，首次订阅不推送，只有当下单、撤单等事件触发时，推送数据
+     * 系统将限制订阅 WebSocket 频道的最大并发连接数。详情在限制 WebSocket 私有频道对应连接数量
+     */
+    ORDERS("orders", "onOperateOrders", "onReceiveOrders"),
 
     //****************** 业务频道，需验证即可使用 *************************/
 

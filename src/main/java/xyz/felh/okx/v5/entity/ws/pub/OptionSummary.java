@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
-public class OptSummary implements WsSubscribeEntity {
+public class OptionSummary implements WsSubscribeEntity {
 
     /**
      * 产品类型， OPTION

@@ -7,8 +7,8 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import xyz.felh.okx.v5.entity.ws.biz.IndexCandle;
-import xyz.felh.okx.v5.entity.ws.biz.MarkPriceCandle;
+import xyz.felh.okx.v5.entity.ws.biz.IndexCandlesticks;
+import xyz.felh.okx.v5.entity.ws.biz.MarkPriceCandlesticks;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -39,7 +39,7 @@ public class WsSubscribeResponse<T, D> implements IWsResponse {
                 WsSubscribeResponse<T, D> result = new WsSubscribeResponse<>();
                 result.setArg(JSONObject.parseObject(response.getArg().toString(), tClass));
 
-                if (dClass == MarkPriceCandle.class || dClass == IndexCandle.class) {
+                if (dClass == MarkPriceCandlesticks.class || dClass == IndexCandlesticks.class) {
                     result.setData(response.getData().stream().map(it -> {
                         D instance = null;
                         try {

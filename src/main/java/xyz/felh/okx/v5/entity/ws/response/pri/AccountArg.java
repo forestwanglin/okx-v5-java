@@ -4,8 +4,8 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import xyz.felh.okx.v5.enumeration.ws.Channel;
 import xyz.felh.okx.v5.entity.ws.response.WsResponseArg;
+import xyz.felh.okx.v5.enumeration.ws.Channel;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

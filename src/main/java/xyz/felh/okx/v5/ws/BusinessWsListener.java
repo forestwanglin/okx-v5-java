@@ -16,7 +16,7 @@ import xyz.felh.okx.v5.enumeration.ws.WsChannel;
 public class BusinessWsListener extends FelhWsListener {
 
     public BusinessWsListener(@NotNull OkxWsApiService okxWsApiService) {
-        super(okxWsApiService, WsChannel.BUSINESS);
+        super(WsChannel.BUSINESS, okxWsApiService);
     }
 
     @Override
@@ -49,4 +49,8 @@ public class BusinessWsListener extends FelhWsListener {
         super.onFailure(webSocket, t, response);
     }
 
+    @Override
+    protected void afterConnected() {
+        okxWsApiService.getSubscribeStateService().restoreSubscribed(WsChannel.BUSINESS);
+    }
 }

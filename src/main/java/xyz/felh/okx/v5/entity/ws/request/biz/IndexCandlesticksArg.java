@@ -1,11 +1,10 @@
-package xyz.felh.okx.v5.entity.ws.request.pub;
+package xyz.felh.okx.v5.entity.ws.request.biz;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import xyz.felh.okx.v5.entity.ws.request.WsRequestArg;
-import xyz.felh.okx.v5.enumeration.ws.Channel;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -14,17 +13,16 @@ import xyz.felh.okx.v5.enumeration.ws.Channel;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
-public class OptSummaryArg extends WsRequestArg {
+public class IndexCandlesticksArg extends WsRequestArg {
 
-    @Builder.Default
-    private Channel channel = Channel.OPT_SUMMARY;
+    // 新建的时候必须指定channel
 
     /**
-     * 交易品种
+     * 现货指数，如 BTC-USD
      */
     @NonNull
-    @JSONField(name = "instFamily")
-    @JsonProperty("instFamily")
-    private String instFamily;
+    @JSONField(name = "instId")
+    @JsonProperty("instId")
+    private String instId;
 
 }

@@ -1,6 +1,9 @@
 package xyz.felh.okx.v5.entity.ws.response;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import xyz.felh.okx.v5.entity.ws.WsSubUnsubArg;
 
@@ -11,4 +14,5 @@ import xyz.felh.okx.v5.entity.ws.WsSubUnsubArg;
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
 public abstract class WsResponseArg extends WsSubUnsubArg {
+
 }

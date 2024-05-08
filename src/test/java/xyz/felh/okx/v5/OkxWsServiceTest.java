@@ -4,17 +4,18 @@ import com.alibaba.fastjson2.JSON;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import xyz.felh.okx.v5.entity.ws.biz.IndexCandle;
+import xyz.felh.okx.v5.entity.ws.biz.IndexCandlesticks;
 import xyz.felh.okx.v5.entity.ws.pri.Account;
 import xyz.felh.okx.v5.entity.ws.pub.OpenInterest;
 import xyz.felh.okx.v5.entity.ws.request.Operation;
 import xyz.felh.okx.v5.entity.ws.request.WsRequest;
-import xyz.felh.okx.v5.entity.ws.request.biz.IndexCandleArg;
+import xyz.felh.okx.v5.entity.ws.request.pri.LoginArg;
 import xyz.felh.okx.v5.entity.ws.request.pub.InstrumentsArg;
 import xyz.felh.okx.v5.entity.ws.request.pub.OpenInterestArg;
 import xyz.felh.okx.v5.entity.ws.response.ErrorResponse;
 import xyz.felh.okx.v5.entity.ws.response.WsResponse;
 import xyz.felh.okx.v5.entity.ws.response.WsSubscribeResponse;
+import xyz.felh.okx.v5.entity.ws.response.biz.IndexCandlesticksArg;
 import xyz.felh.okx.v5.enumeration.ws.Channel;
 import xyz.felh.okx.v5.enumeration.ws.InstrumentType;
 import xyz.felh.okx.v5.enumeration.ws.WsChannel;
@@ -46,9 +47,8 @@ public class OkxWsServiceTest {
     public void test() throws InterruptedException {
         OkxWsApiService wsApiService = getOkxWsService();
         wsApiService.connect(WsChannel.PUBLIC);
-//        wsApiService.connect(WsChannel.PRIVATE);
+        wsApiService.connect(WsChannel.PRIVATE);
 //        wsApiService.connect(WsChannel.BUSINESS);
-        TimeUnit.SECONDS.sleep(5);
 
         wsApiService.setWsMessageListener(new WsMessageListener() {
 
@@ -83,12 +83,12 @@ public class OkxWsServiceTest {
             }
 
             @Override
-            public void onOperateIndexCandle(@NonNull WsResponse<xyz.felh.okx.v5.entity.ws.response.biz.IndexCandleArg> response) {
+            public void onOperateIndexCandle(@NonNull WsResponse<IndexCandlesticksArg> response) {
                 log.info("onOperateIndexCandle: {}", JSON.toJSONString(response));
             }
 
             @Override
-            public void onReceiveIndexCandle(@NonNull WsSubscribeResponse<xyz.felh.okx.v5.entity.ws.response.biz.IndexCandleArg, IndexCandle> response) {
+            public void onReceiveIndexCandle(@NonNull WsSubscribeResponse<IndexCandlesticksArg, IndexCandlesticks> response) {
                 log.info("onReceiveIndexCandle: {}", JSON.toJSONString(response));
             }
         });
@@ -96,9 +96,22 @@ public class OkxWsServiceTest {
 //        wsApiService.subscribeAccount(AccountArg.builder()
 //                .ccy("BTC")
 //                .build());
+        TimeUnit.SECONDS.sleep(5L);
         wsApiService.subscribeOpenInterest(OpenInterestArg.builder()
                 .instId("LTC-USD-SWAP")
                 .build());
+//        TimeUnit.SECONDS.sleep(5L);
+//        wsApiService.subscribeOpenInterest(OpenInterestArg.builder()
+//                .instId("BTC-USD-SWAP")
+//                .build());
+//        TimeUnit.SECONDS.sleep(10L);
+//        wsApiService.unsubscribeOpenInterest(OpenInterestArg.builder()
+//                .instId("BTC-USD-SWAP")
+//                .build());
+
+//        wsApiService.subscribeOpenInterest(OpenInterestArg.builder()
+//                .instId("LTC-USD-SWAP")
+//                .build());
 //        TimeUnit.SECONDS.sleep(10L);
 //        wsApiService.unsubscribeOpenInterest(OpenInterestArg.builder()
 //                .instId("LTC-USD-SWAP")
@@ -106,14 +119,14 @@ public class OkxWsServiceTest {
 
         TimeUnit.SECONDS.sleep(5);
         // 模拟盘
-//        String apiKey = System.getenv("API_KEY");
-//        String passphrase = System.getenv("PASSPHRASE");
-//        String secretKey = System.getenv("SECRET_KEY");
-//        wsApiService.login(LoginArg.builder()
-//                .apiKey(apiKey)
-//                .passphrase(passphrase)
-//                .timestamp(System.currentTimeMillis() / 1000 + "")
-//                .build(), secretKey);
+        String apiKey = System.getenv("API_KEY");
+        String passphrase = System.getenv("PASSPHRASE");
+        String secretKey = System.getenv("SECRET_KEY");
+        wsApiService.login(LoginArg.builder()
+                .apiKey(apiKey)
+                .passphrase(passphrase)
+                .timestamp(System.currentTimeMillis() / 1000 + "")
+                .build(), secretKey);
 
 //        TimeUnit.SECONDS.sleep(5);
 //        wsApiService.subscribeAccount(AccountArg.builder()
@@ -133,10 +146,10 @@ public class OkxWsServiceTest {
 //                .ccy("BTC")
 //                .build());
 
-        wsApiService.subscribeIndexCandle(IndexCandleArg.builder()
-                .channel(Channel.INDEX_CANDLE_1M)
-                .instId("BTC-USD")
-                .build());
+//        wsApiService.subscribeIndexCandle(IndexCandleArg.builder()
+//                .channel(Channel.INDEX_CANDLE_1M)
+//                .instId("BTC-USD")
+//                .build());
         TimeUnit.MINUTES.sleep(30L);
     }
 

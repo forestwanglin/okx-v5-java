@@ -1,4 +1,4 @@
-package xyz.felh.okx.v5.enumeration.rest;
+package xyz.felh.okx.v5.enumeration;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;

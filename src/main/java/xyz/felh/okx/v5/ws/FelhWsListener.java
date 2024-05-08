@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.felh.okx.v5.OkxWsApiService;
 import xyz.felh.okx.v5.entity.ws.WsSubscribeEntity;
+import xyz.felh.okx.v5.entity.ws.request.WsRequestArg;
 import xyz.felh.okx.v5.entity.ws.response.CommonResponse;
 import xyz.felh.okx.v5.entity.ws.response.ErrorResponse;
 import xyz.felh.okx.v5.entity.ws.response.LoginResponse;
@@ -31,7 +32,7 @@ public abstract class FelhWsListener extends WebSocketListener {
     protected final OkxWsApiService okxWsApiService;
     private final WsChannel wsChannel;
 
-    public FelhWsListener(OkxWsApiService okxWsApiService, WsChannel wsChannel) {
+    public FelhWsListener(WsChannel wsChannel, OkxWsApiService okxWsApiService) {
         this.okxWsApiService = okxWsApiService;
         this.wsChannel = wsChannel;
     }
@@ -41,14 +42,19 @@ public abstract class FelhWsListener extends WebSocketListener {
         log.info("WebSocket opened {}", wsChannel);
         okxWsApiService.setWebSocket(wsChannel, webSocket);
         okxWsApiService.resetConnectCount(wsChannel);
-        boolean isConnect = response.code() == 101;
-        okxWsApiService.setConnectState(wsChannel, isConnect);
-        if (isConnect) {
+        boolean isConnected = response.code() == 101;
+        okxWsApiService.setConnectState(wsChannel, isConnected);
+        if (isConnected) {
             log.info("WebSocket connect success");
             startHeartbeatThread();
+            afterConnected();
         } else {
             okxWsApiService.reconnect(wsChannel);
         }
+    }
+
+    protected void afterConnected() {
+        //
     }
 
     @Override
@@ -58,18 +64,22 @@ public abstract class FelhWsListener extends WebSocketListener {
             log.debug("WebSocket heartbeat response {}", message);
         } else {
             // error message
-            CommonResponse errorResponse = new ErrorResponse().tryParse(message);
+            CommonResponse errorResponse = CommonResponse.tryParse(message, ErrorResponse.class);
             if (errorResponse != null) {
                 okxWsApiService.getWsMessageListener().onOperateError((ErrorResponse) errorResponse);
+                return;
             }
             // login message
-            CommonResponse loginResponse = new LoginResponse().tryParse(message);
+            CommonResponse loginResponse = CommonResponse.tryParse(message, LoginResponse.class);
             if (loginResponse != null) {
+                okxWsApiService.setHasLogin(true);
                 okxWsApiService.getWsMessageListener().onLoginSuccess();
+                okxWsApiService.getSubscribeStateService().restoreSubscribed(WsChannel.PRIVATE);
+                return;
             }
             // response and subscribe response
-            WsSubscribeEntityHandler<? extends WsResponseArg, ? extends WsSubscribeEntity> handler
-                    = WsSubscribeEntityHandlerFactory.getHandler(message);
+            WsSubscribeEntityHandler<? extends WsRequestArg, ? extends WsResponseArg, ? extends WsSubscribeEntity> handler
+                    = WsSubscribeEntityHandlerFactory.getHandler(message, wsChannel, okxWsApiService.getSubscribeStateService());
             handler.handle(okxWsApiService.getWsMessageListener());
         }
     }
@@ -99,7 +109,6 @@ public abstract class FelhWsListener extends WebSocketListener {
     public void onFailure(@NotNull WebSocket webSocket, @NotNull Throwable t, @Nullable Response response) {
         log.info("onFailure: {} {} {} {}", wsChannel, webSocket, t, response);
         okxWsApiService.setWebSocket(wsChannel, null);
-        okxWsApiService.resetConnectCount(wsChannel);
         okxWsApiService.setConnectState(wsChannel, false);
         if (t.getMessage() != null && t.getMessage().equals("Socket closed")) {
             okxWsApiService.reconnect(wsChannel);

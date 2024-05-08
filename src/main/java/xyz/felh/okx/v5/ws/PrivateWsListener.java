@@ -16,7 +16,7 @@ import xyz.felh.okx.v5.enumeration.ws.WsChannel;
 public class PrivateWsListener extends FelhWsListener {
 
     public PrivateWsListener(@NotNull OkxWsApiService okxWsApiService) {
-        super(okxWsApiService, WsChannel.PRIVATE);
+        super(WsChannel.PRIVATE, okxWsApiService);
     }
 
     @Override
@@ -49,4 +49,8 @@ public class PrivateWsListener extends FelhWsListener {
         super.onFailure(webSocket, t, response);
     }
 
+    @Override
+    protected void afterConnected() {
+        okxWsApiService.getSubscribeStateService().tryLogin();
+    }
 }

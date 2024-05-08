@@ -1,18 +1,23 @@
-package xyz.felh.okx.v5.enumeration.rest;
+package xyz.felh.okx.v5.enumeration.ws;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
-public enum StpMode {
+public enum ExecType {
 
-    CANCEL_MAKER("cancel_maker"),
-    CANCEL_TAKER("cancel_taker"),
-    CANCEL_BOTH("cancel_both");
+    /**
+     * taker
+     */
+    T("T"),
+    /**
+     * maker
+     */
+    M("M");
 
     private final String value;
 
-    StpMode(final String value) {
+    ExecType(final String value) {
         this.value = value;
     }
 
@@ -20,5 +25,6 @@ public enum StpMode {
     public String value() {
         return value;
     }
+
 
 }

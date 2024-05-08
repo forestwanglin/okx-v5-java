@@ -69,6 +69,14 @@ public abstract class WsMessageListener {
         log.debug("onReceiveAccountGreeks: {}", response);
     }
 
+    public void onOperateOrders(@NonNull WsResponse<OrderArg> response) {
+        log.debug("onOperateOrders: {}", response);
+    }
+
+    public void onReceiveOrders(@NonNull WsSubscribeResponse<OrderArg, Order> response) {
+        log.debug("onReceiveOrders: {}", response);
+    }
+
     // public
 
     public void onOperateInstruments(WsResponse<InstrumentsArg> response) {
@@ -103,11 +111,11 @@ public abstract class WsMessageListener {
         log.debug("onReceivePriceLimit: {}", response);
     }
 
-    public void onOperateOptSummary(@NonNull WsResponse<OptSummaryArg> response) {
+    public void onOperateOptSummary(@NonNull WsResponse<OptionSummaryArg> response) {
         log.debug("onOperateOptSummary: {}", response);
     }
 
-    public void onReceiveOptSummary(@NonNull WsSubscribeResponse<OptSummaryArg, OptSummary> response) {
+    public void onReceiveOptSummary(@NonNull WsSubscribeResponse<OptionSummaryArg, OptionSummary> response) {
         log.debug("onReceiveOptSummary: {}", response);
     }
 
@@ -169,19 +177,19 @@ public abstract class WsMessageListener {
         log.debug("onReceiveWithdrawalInfo: {}", response);
     }
 
-    public void onOperateMarkPriceCandle(@NonNull WsResponse<MarkPriceCandleArg> response) {
+    public void onOperateMarkPriceCandle(@NonNull WsResponse<MarkPriceCandlesticksArg> response) {
         log.debug("onOperateMarkPriceCandle: {}", response);
     }
 
-    public void onReceiveMarkPriceCandle(@NonNull WsSubscribeResponse<MarkPriceCandleArg, MarkPriceCandle> response) {
+    public void onReceiveMarkPriceCandle(@NonNull WsSubscribeResponse<MarkPriceCandlesticksArg, MarkPriceCandlesticks> response) {
         log.debug("onReceiveMarkPriceCandle: {}", response);
     }
 
-    public void onOperateIndexCandle(@NonNull WsResponse<IndexCandleArg> response) {
+    public void onOperateIndexCandle(@NonNull WsResponse<IndexCandlesticksArg> response) {
         log.debug("onOperateIndexCandle: {}", response);
     }
 
-    public void onReceiveIndexCandle(@NonNull WsSubscribeResponse<IndexCandleArg, IndexCandle> response) {
+    public void onReceiveIndexCandle(@NonNull WsSubscribeResponse<IndexCandlesticksArg, IndexCandlesticks> response) {
         log.debug("onReceiveIndexCandle: {}", response);
     }
 
