@@ -6,6 +6,7 @@ import xyz.felh.okx.v5.entity.ws.biz.*;
 import xyz.felh.okx.v5.entity.ws.pri.*;
 import xyz.felh.okx.v5.entity.ws.pub.*;
 import xyz.felh.okx.v5.entity.ws.response.ErrorResponse;
+import xyz.felh.okx.v5.entity.ws.response.WsOnceResponse;
 import xyz.felh.okx.v5.entity.ws.response.WsResponse;
 import xyz.felh.okx.v5.entity.ws.response.WsSubscribeResponse;
 import xyz.felh.okx.v5.entity.ws.response.biz.*;
@@ -199,6 +200,13 @@ public abstract class WsMessageListener {
 
     public void onReceiveEconomicCalendar(@NonNull WsSubscribeResponse<EconomicCalendarArg, EconomicCalendar> response) {
         log.debug("onReceiveEconomicCalendar: {}", response);
+    }
+
+    // once response
+
+    // private
+    public void onPlaceOrderResponse(@NonNull WsOnceResponse<PlaceOrderArg> response) {
+        log.debug("onPlaceOrderResponse: {}", response);
     }
 
 }

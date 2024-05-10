@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.TypeReference;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -12,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder(toBuilder = true)
 public class WsResponse<T> implements IWsResponse {
 
     @JSONField(name = "event")
@@ -44,7 +45,7 @@ public class WsResponse<T> implements IWsResponse {
     @JsonProperty("msg")
     private String msg;
 
-    public WsResponse<T> tryParse(Class<T> tClass, String message) {
+    public static <T> WsResponse<T> tryParse(Class<T> tClass, String message) {
         try {
             WsResponse<JSONObject> response = JSONObject.parseObject(message, new TypeReference<>() {
             });

@@ -40,7 +40,7 @@ I am going to implement all APIs on the [official api document](https://www.okx.
   - [Order Book Trading](https://www.okx.com/docs-v5/en/#order-book-trading)
     - [Trade](https://www.okx.com/docs-v5/en/#order-book-trading-trade)
       - [x] [WS / Order channel](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-order-channel)
-      - [ ] [WS / Place order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-place-order)
+      - [x] [WS / Place order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-place-order)
       - [ ] [WS / Place multiple orders](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-place-multiple-orders)
       - [ ] [WS / Cancel order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-cancel-order)
       - [ ] [WS / Cancel multiple orders](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-cancel-multiple-orders)
@@ -50,6 +50,11 @@ I am going to implement all APIs on the [official api document](https://www.okx.
     - [Algo Trading](https://www.okx.com/docs-v5/en/#order-book-trading-algo-trading)
       - [ ] [WS / Algo orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-algo-trading-ws-algo-orders-channel)
       - [ ] [WS / Advance algo orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-algo-trading-ws-advance-algo-orders-channel)
+    - [Grid Trading](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading)
+      - [ ] [WS / Spot grid algo orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-ws-spot-grid-algo-orders-channel)
+      - [ ] [WS / Contract grid algo orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-ws-contract-grid-algo-orders-channel)
+      - [ ] [WS / Grid positions channel](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-ws-grid-positions-channel)
+      - [ ] [WS / Grid sub orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-ws-grid-sub-orders-channel)
   - [Public Data](https://www.okx.com/docs-v5/en/#public-data-websocket)
     - [x] [Instruments channel](https://www.okx.com/docs-v5/en/#public-data-websocket-instruments-channel)
     - [x] [Open interest channel](https://www.okx.com/docs-v5/en/#public-data-websocket-open-interest-channel)
@@ -95,8 +100,8 @@ libraryDependencies += "xyz.felh" % "okx-v5-java" % "0.2.2024050801"
 
 ## Important
 
-- ##### Automatically login when reconnected websocket if it has been login to PRIVATE channel
-- ##### Automatically restore all subscribe channels when reconnected websocket
+- #### Automatically login when reconnected websocket if it has been login to PRIVATE channel
+- #### Automatically restore all subscribe channels when reconnected websocket
 
 
 ## License

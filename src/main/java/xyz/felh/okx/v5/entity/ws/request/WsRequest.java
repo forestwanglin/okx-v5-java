@@ -11,7 +11,7 @@ import xyz.felh.okx.v5.entity.ws.WsArg;
 
 import java.util.List;
 
-@ToString
+@ToString(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

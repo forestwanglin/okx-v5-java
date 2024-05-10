@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import xyz.felh.okx.v5.entity.ws.WsArg;
+import xyz.felh.okx.v5.entity.ws.request.WsRequestArg;
 
 
 @Data
@@ -15,7 +16,7 @@ import xyz.felh.okx.v5.entity.ws.WsArg;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
-public class LoginArg implements WsArg {
+public class LoginArg implements WsRequestArg {
 
     /**
      * APIKey
@@ -44,4 +45,5 @@ public class LoginArg implements WsArg {
     @JSONField(name = "sign")
     @JsonProperty("sign")
     private String sign;
+
 }

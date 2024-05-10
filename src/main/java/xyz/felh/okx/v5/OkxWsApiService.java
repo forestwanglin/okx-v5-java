@@ -9,9 +9,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.WebSocket;
 import okio.ByteString;
-import xyz.felh.okx.v5.entity.ws.request.Operation;
-import xyz.felh.okx.v5.entity.ws.request.WsRequest;
-import xyz.felh.okx.v5.entity.ws.request.WsRequestArg;
+import xyz.felh.okx.v5.entity.ws.request.*;
 import xyz.felh.okx.v5.entity.ws.request.biz.*;
 import xyz.felh.okx.v5.entity.ws.request.pri.*;
 import xyz.felh.okx.v5.entity.ws.request.pub.*;
@@ -203,8 +201,9 @@ public class OkxWsApiService {
         wsClientMap.get(wsChannel).close(code, reason);
     }
 
-    // below is the api for business
-    private void subscribe(WsChannel wsChannel, WsRequestArg requestArg) {
+    // below is the api logic
+
+    private void subscribe(WsChannel wsChannel, WsChannelRequestArg requestArg) {
         if (!subscribeStateService.hasSubscribed(wsChannel, requestArg)) {
             pureSubscribe(wsChannel, requestArg);
             subscribeStateService.addSubscribed(wsChannel, requestArg);
@@ -213,18 +212,26 @@ public class OkxWsApiService {
         }
     }
 
-    public void pureSubscribe(WsChannel wsChannel, WsRequestArg requestArg) {
+    public void pureSubscribe(WsChannel wsChannel, WsChannelRequestArg requestArg) {
         WsRequest wsRequest = WsRequest.builder()
                 .op(Operation.SUBSCRIBE)
                 .args(List.of(requestArg)).build();
         send(wsChannel, JSON.toJSONString(wsRequest));
     }
 
-    private void unsubscribe(WsChannel wsChannel, WsRequestArg requestArg) {
+    private void unsubscribe(WsChannel wsChannel, WsChannelRequestArg requestArg) {
         WsRequest wsRequest = WsRequest.builder()
                 .op(Operation.UNSUBSCRIBE)
                 .args(List.of(requestArg)).build();
         send(wsChannel, JSON.toJSONString(wsRequest));
+    }
+
+    private void sendOnceRequest(WsChannel wsChannel, String id, Operation operation, WsRequestArg wsRequestArg) {
+        WsOnceRequest wsOnceRequest = WsOnceRequest.builder()
+                .id(id)
+                .op(operation)
+                .args(List.of(wsRequestArg)).build();
+        send(wsChannel, JSON.toJSONString(wsOnceRequest));
     }
 
     //********************************** private channel
@@ -517,6 +524,20 @@ public class OkxWsApiService {
 
     public void unsubscribeEconomicCalendar(EconomicCalendarArg economicCalendarArg) {
         unsubscribe(WsChannel.BUSINESS, economicCalendarArg);
+    }
+
+    /**********  it is request and response once api below **********/
+
+    // private channel
+
+    /**
+     * WS / Place order
+     *
+     * @param id            request id
+     * @param placeOrderArg placeOrderArg
+     */
+    public void placeOrder(String id, PlaceOrderArg placeOrderArg) {
+        sendOnceRequest(WsChannel.PRIVATE, id, Operation.ORDER, placeOrderArg);
     }
 
 }

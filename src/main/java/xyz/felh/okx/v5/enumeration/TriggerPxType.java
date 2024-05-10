@@ -30,5 +30,4 @@ public enum TriggerPxType {
         return value;
     }
 
-
 }

@@ -1,8 +1,14 @@
 package xyz.felh.okx.v5;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import xyz.felh.okx.v5.entity.rest.trading.order.booking.PlaceOrderReq;
+import xyz.felh.okx.v5.entity.ws.pri.Order;
 import xyz.felh.okx.v5.enumeration.OrderType;
 import xyz.felh.okx.v5.enumeration.Side;
 import xyz.felh.okx.v5.enumeration.ws.TdMode;
@@ -47,5 +53,20 @@ public class OkxServiceTest {
         log.info("test: {}", response);
     }
 
+    @Test
+    public void testIssue2() throws JsonProcessingException {
+        ObjectMapper objectMapper = defaultObjectMapper();
+        Order order = objectMapper.readValue("{\"tpTriggerPxType\": \"a\"}", Order.class);
+        System.out.println(order);
+    }
+
+    public static ObjectMapper defaultObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true);
+        mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
+        mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
+        return mapper;
+    }
 
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import xyz.felh.okx.v5.OkxWsApiService;
 import xyz.felh.okx.v5.constant.OkxConstants;
+import xyz.felh.okx.v5.entity.ws.request.WsChannelRequestArg;
 import xyz.felh.okx.v5.entity.ws.request.WsRequestArg;
 import xyz.felh.okx.v5.entity.ws.request.pri.LoginArg;
 import xyz.felh.okx.v5.enumeration.ws.WsChannel;
@@ -53,7 +54,7 @@ public class SubscribeStateService {
      * @param arg       arg
      * @return if current channel has been subscribed
      */
-    public boolean hasSubscribed(WsChannel wsChannel, WsRequestArg arg) {
+    public boolean hasSubscribed(WsChannel wsChannel, WsChannelRequestArg arg) {
         List<SubscribeState> subscribeStates = subscribedMap.get(wsChannel);
         if (subscribeStates != null) {
             for (SubscribeState subscribeState : subscribeStates) {
@@ -72,7 +73,7 @@ public class SubscribeStateService {
      * @param wsChannel channel
      * @param arg       arg
      */
-    public void addSubscribed(WsChannel wsChannel, WsRequestArg arg) {
+    public void addSubscribed(WsChannel wsChannel, WsChannelRequestArg arg) {
         List<SubscribeState> subscribeStates = subscribedMap.get(wsChannel);
         if (subscribeStates == null) {
             subscribeStates = new ArrayList<>();
@@ -154,7 +155,7 @@ public class SubscribeStateService {
     @Builder
     @Data
     static class SubscribeState {
-        private WsRequestArg arg;
+        private WsChannelRequestArg arg;
         private boolean subscribed;
     }
 

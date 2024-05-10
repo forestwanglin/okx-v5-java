@@ -7,8 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import xyz.felh.okx.v5.enumeration.ws.InstrumentType;
 import xyz.felh.okx.v5.entity.ws.WsSubscribeEntity;
+import xyz.felh.okx.v5.enumeration.ws.InstrumentType;
 
 import java.math.BigDecimal;
 
@@ -53,6 +53,5 @@ public class OpenInterest implements WsSubscribeEntity {
     @JSONField(name = "ts")
     @JsonProperty("ts")
     private Long timestamp;
-
 
 }

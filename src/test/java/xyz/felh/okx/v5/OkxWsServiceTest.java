@@ -10,16 +10,22 @@ import xyz.felh.okx.v5.entity.ws.pub.OpenInterest;
 import xyz.felh.okx.v5.entity.ws.request.Operation;
 import xyz.felh.okx.v5.entity.ws.request.WsRequest;
 import xyz.felh.okx.v5.entity.ws.request.pri.LoginArg;
+import xyz.felh.okx.v5.entity.ws.request.pri.PlaceOrderArg;
 import xyz.felh.okx.v5.entity.ws.request.pub.InstrumentsArg;
 import xyz.felh.okx.v5.entity.ws.request.pub.OpenInterestArg;
 import xyz.felh.okx.v5.entity.ws.response.ErrorResponse;
+import xyz.felh.okx.v5.entity.ws.response.WsOnceResponse;
 import xyz.felh.okx.v5.entity.ws.response.WsResponse;
 import xyz.felh.okx.v5.entity.ws.response.WsSubscribeResponse;
 import xyz.felh.okx.v5.entity.ws.response.biz.IndexCandlesticksArg;
+import xyz.felh.okx.v5.enumeration.OrderType;
+import xyz.felh.okx.v5.enumeration.Side;
 import xyz.felh.okx.v5.enumeration.ws.Channel;
 import xyz.felh.okx.v5.enumeration.ws.InstrumentType;
+import xyz.felh.okx.v5.enumeration.ws.TdMode;
 import xyz.felh.okx.v5.enumeration.ws.WsChannel;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -91,6 +97,11 @@ public class OkxWsServiceTest {
             public void onReceiveIndexCandle(@NonNull WsSubscribeResponse<IndexCandlesticksArg, IndexCandlesticks> response) {
                 log.info("onReceiveIndexCandle: {}", JSON.toJSONString(response));
             }
+
+            @Override
+            public void onPlaceOrderResponse(@NonNull WsOnceResponse<xyz.felh.okx.v5.entity.ws.response.pri.PlaceOrderArg> response) {
+                log.info("onPlaceOrderResponse: {}", JSON.toJSONString(response));
+            }
         });
 
 //        wsApiService.subscribeAccount(AccountArg.builder()
@@ -116,7 +127,6 @@ public class OkxWsServiceTest {
 //        wsApiService.unsubscribeOpenInterest(OpenInterestArg.builder()
 //                .instId("LTC-USD-SWAP")
 //                .build());
-
         TimeUnit.SECONDS.sleep(5);
         // 模拟盘
         String apiKey = System.getenv("API_KEY");
@@ -128,7 +138,16 @@ public class OkxWsServiceTest {
                 .timestamp(System.currentTimeMillis() / 1000 + "")
                 .build(), secretKey);
 
-//        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.SECONDS.sleep(5);
+
+        wsApiService.placeOrder("aaa", PlaceOrderArg.builder()
+                .sz(BigDecimal.ONE)
+                .ordType(OrderType.LIMIT)
+                .side(Side.SELL)
+                .tdMode(TdMode.CASH)
+                .instId("BTC-USDT")
+                .build());
+
 //        wsApiService.subscribeAccount(AccountArg.builder()
 //                .ccy("BTC")
 //                .build());

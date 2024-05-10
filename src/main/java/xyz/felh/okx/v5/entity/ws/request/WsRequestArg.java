@@ -1,16 +1,9 @@
 package xyz.felh.okx.v5.entity.ws.request;
 
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import xyz.felh.okx.v5.entity.ws.WsSubUnsubArg;
+import xyz.felh.okx.v5.entity.ws.WsArg;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
-@ToString(callSuper = true)
-@AllArgsConstructor
-@SuperBuilder(toBuilder = true)
-public abstract class WsRequestArg extends WsSubUnsubArg {
-
-
-
+/**
+ * The interface of websocket request argument
+ */
+public interface WsRequestArg extends WsArg {
 }

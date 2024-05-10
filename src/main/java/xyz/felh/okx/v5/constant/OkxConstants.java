@@ -50,6 +50,10 @@ public interface OkxConstants {
     // 订阅消息中的常量
     String RSP_CHANNEL = "channel";
     String RSP_ARG = "arg";
+    String RSP_EVENT = "event";
+    String RSP_ID = "id";
+    String RSP_OP = "op";
+    String RSP_DATA = "data";
 
     // common
     String EMPTY = "";

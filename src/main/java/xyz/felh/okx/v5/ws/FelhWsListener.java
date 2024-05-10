@@ -8,15 +8,9 @@ import okio.ByteString;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.felh.okx.v5.OkxWsApiService;
-import xyz.felh.okx.v5.entity.ws.WsSubscribeEntity;
-import xyz.felh.okx.v5.entity.ws.request.WsRequestArg;
-import xyz.felh.okx.v5.entity.ws.response.CommonResponse;
-import xyz.felh.okx.v5.entity.ws.response.ErrorResponse;
-import xyz.felh.okx.v5.entity.ws.response.LoginResponse;
-import xyz.felh.okx.v5.entity.ws.response.WsResponseArg;
 import xyz.felh.okx.v5.enumeration.ws.WsChannel;
-import xyz.felh.okx.v5.handler.WsSubscribeEntityHandler;
-import xyz.felh.okx.v5.handler.WsSubscribeEntityHandlerFactory;
+import xyz.felh.okx.v5.handler.WsHandler;
+import xyz.felh.okx.v5.handler.WsHandlerFactory;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -63,24 +57,10 @@ public abstract class FelhWsListener extends WebSocketListener {
         if (HEARTBEAT_RSP_MESSAGE.equals(message)) {
             log.debug("WebSocket heartbeat response {}", message);
         } else {
-            // error message
-            CommonResponse errorResponse = CommonResponse.tryParse(message, ErrorResponse.class);
-            if (errorResponse != null) {
-                okxWsApiService.getWsMessageListener().onOperateError((ErrorResponse) errorResponse);
-                return;
+            WsHandler handler = WsHandlerFactory.getHandler(wsChannel, okxWsApiService, message);
+            if (handler != null) {
+                handler.handle(okxWsApiService);
             }
-            // login message
-            CommonResponse loginResponse = CommonResponse.tryParse(message, LoginResponse.class);
-            if (loginResponse != null) {
-                okxWsApiService.setHasLogin(true);
-                okxWsApiService.getWsMessageListener().onLoginSuccess();
-                okxWsApiService.getSubscribeStateService().restoreSubscribed(WsChannel.PRIVATE);
-                return;
-            }
-            // response and subscribe response
-            WsSubscribeEntityHandler<? extends WsRequestArg, ? extends WsResponseArg, ? extends WsSubscribeEntity> handler
-                    = WsSubscribeEntityHandlerFactory.getHandler(message, wsChannel, okxWsApiService.getSubscribeStateService());
-            handler.handle(okxWsApiService.getWsMessageListener());
         }
     }
 

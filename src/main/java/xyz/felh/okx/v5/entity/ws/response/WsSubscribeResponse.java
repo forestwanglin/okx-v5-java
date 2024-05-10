@@ -31,7 +31,7 @@ public class WsSubscribeResponse<T, D> implements IWsResponse {
     @JsonProperty("data")
     private List<D> data;
 
-    public WsSubscribeResponse<T, D> tryParse(Class<T> tClass, Class<D> dClass, String message) {
+    public static <T, D> WsSubscribeResponse<T, D> tryParse(Class<T> tClass, Class<D> dClass, String message) {
         try {
             WsSubscribeResponse<JSONObject, ?> response = JSONObject.parseObject(message, new TypeReference<>() {
             });
