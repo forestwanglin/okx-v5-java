@@ -1,5 +1,5 @@
 # okx-v5-java
-[![GitHub version](https://img.shields.io/static/v1?label=version&message=v0.3.2024051001&color=blue)](https://github.com/forestwanglin/openai-java)
+[![GitHub version](https://img.shields.io/static/v1?label=version&message=v0.3.2024051001&color=blue)](https://github.com/forestwanglin/okx-v5-java)
 [![License](https://img.shields.io/static/v1?label=license&message=MIT&color=orange)](https://github.com/forestwanglin/okx-v5-java/blob/main/LICENSE)
 
 OKX v5 SDK for JAVA. 
