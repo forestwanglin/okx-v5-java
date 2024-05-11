@@ -1,5 +1,5 @@
 # okx-v5-java
-[![GitHub version](https://img.shields.io/static/v1?label=version&message=v0.3.2024051001&color=blue)](https://github.com/forestwanglin/okx-v5-java)
+[![GitHub version](https://img.shields.io/static/v1?label=version&message=v0.4.2024051101&color=blue)](https://github.com/forestwanglin/okx-v5-java)
 [![License](https://img.shields.io/static/v1?label=license&message=MIT&color=orange)](https://github.com/forestwanglin/okx-v5-java/blob/main/LICENSE)
 
 OKX v5 SDK for JAVA. 
@@ -41,20 +41,20 @@ I am going to implement all APIs on the [official api document](https://www.okx.
     - [Trade](https://www.okx.com/docs-v5/en/#order-book-trading-trade)
       - [x] [WS / Order channel](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-order-channel)
       - [x] [WS / Place order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-place-order)
-      - [ ] [WS / Place multiple orders](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-place-multiple-orders)
-      - [ ] [WS / Cancel order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-cancel-order)
-      - [ ] [WS / Cancel multiple orders](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-cancel-multiple-orders)
-      - [ ] [WS / Amend order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-amend-order)
-      - [ ] [WS / Amend multiple orders](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-amend-multiple-orders)
-      - [ ] [WS / Mass cancel order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-mass-cancel-order)
+      - [x] [WS / Place multiple orders](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-place-multiple-orders)
+      - [x] [WS / Cancel order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-cancel-order)
+      - [x] [WS / Cancel multiple orders](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-cancel-multiple-orders)
+      - [x] [WS / Amend order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-amend-order)
+      - [x] [WS / Amend multiple orders](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-amend-multiple-orders)
+      - [x] [WS / Mass cancel order](https://www.okx.com/docs-v5/en/#order-book-trading-trade-ws-mass-cancel-order)
     - [Algo Trading](https://www.okx.com/docs-v5/en/#order-book-trading-algo-trading)
-      - [ ] [WS / Algo orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-algo-trading-ws-algo-orders-channel)
-      - [ ] [WS / Advance algo orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-algo-trading-ws-advance-algo-orders-channel)
+      - [x] [WS / Algo orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-algo-trading-ws-algo-orders-channel)
+      - [x] [WS / Advance algo orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-algo-trading-ws-advance-algo-orders-channel)
     - [Grid Trading](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading)
-      - [ ] [WS / Spot grid algo orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-ws-spot-grid-algo-orders-channel)
-      - [ ] [WS / Contract grid algo orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-ws-contract-grid-algo-orders-channel)
-      - [ ] [WS / Grid positions channel](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-ws-grid-positions-channel)
-      - [ ] [WS / Grid sub orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-ws-grid-sub-orders-channel)
+      - [x] [WS / Spot grid algo orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-ws-spot-grid-algo-orders-channel)
+      - [x] [WS / Contract grid algo orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-ws-contract-grid-algo-orders-channel)
+      - [x] [WS / Grid positions channel](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-ws-grid-positions-channel)
+      - [x] [WS / Grid sub orders channel](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-ws-grid-sub-orders-channel)
   - [Public Data](https://www.okx.com/docs-v5/en/#public-data-websocket)
     - [x] [Instruments channel](https://www.okx.com/docs-v5/en/#public-data-websocket-instruments-channel)
     - [x] [Open interest channel](https://www.okx.com/docs-v5/en/#public-data-websocket-open-interest-channel)
@@ -82,20 +82,20 @@ I am going to implement all APIs on the [official api document](https://www.okx.
 <dependency>
     <groupId>xyz.felh</groupId>
     <artifactId>okx-v5-java</artifactId>
-    <version>0.3.2024051001</version>
+    <version>0.4.2024051101</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```yaml
-implementation group: 'xyz.felh', name: 'okx-v5-java', version: '0.3.2024051001'
+implementation group: 'xyz.felh', name: 'okx-v5-java', version: '0.4.2024051101'
 ```
 
 ### sbt
 
 ```javascript
-libraryDependencies += "xyz.felh" % "okx-v5-java" % "0.3.2024051001"
+libraryDependencies += "xyz.felh" % "okx-v5-java" % "0.4.2024051101"
 ```
 
 ## Important

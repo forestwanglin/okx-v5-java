@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import xyz.felh.okx.v5.entity.ws.WsArg;
+import xyz.felh.okx.v5.enumeration.ws.Operation;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
-public class WsRequest {
+public class WsRequest<T extends WsRequestArg> {
 
     @JSONField(name = "op")
     @JsonProperty("op")
@@ -24,6 +24,6 @@ public class WsRequest {
 
     @JSONField(name = "args")
     @JsonProperty("args")
-    private List<WsArg> args;
+    private List<T> args;
 
 }

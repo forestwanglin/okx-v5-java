@@ -6,7 +6,7 @@ import xyz.felh.okx.v5.OkxWsApiService;
 import xyz.felh.okx.v5.entity.ws.biz.*;
 import xyz.felh.okx.v5.entity.ws.pri.*;
 import xyz.felh.okx.v5.entity.ws.pub.*;
-import xyz.felh.okx.v5.entity.ws.request.Operation;
+import xyz.felh.okx.v5.enumeration.ws.Operation;
 import xyz.felh.okx.v5.entity.ws.response.Event;
 import xyz.felh.okx.v5.entity.ws.response.biz.*;
 import xyz.felh.okx.v5.entity.ws.response.pri.*;
@@ -61,7 +61,12 @@ public class WsHandlerFactory {
                                            String message) {
         return switch (operation) {
             // private
-            case ORDER -> new WsOnceHandler<>(PlaceOrderArg.class, wsChannel, message, operation);
+            case ORDER, BATCH_ORDERS -> new WsOnceHandler<>(PlaceOrderArg.class, wsChannel, message, operation);
+            case CANCEL_ORDER, BATCH_CANCEL_ORDERS ->
+                    new WsOnceHandler<>(CancelOrderArg.class, wsChannel, message, operation);
+            case AMEND_ORDER, BATCH_AMEND_ORDERS ->
+                    new WsOnceHandler<>(AmendOrderArg.class, wsChannel, message, operation);
+            case MASS_CANCEL_ORDERS -> new WsOnceHandler<>(MassCancelOrderArg.class, wsChannel, message, operation);
             // business
             // public
             default -> null;
@@ -211,6 +216,30 @@ public class WsHandlerFactory {
             case ECONOMIC_CALENDAR -> pushData ?
                     new WsSubscribePushHandler<>(EconomicCalendarArg.class, EconomicCalendar.class, channel, message, wsChannel) :
                     new WsSubscribeHandler<>(xyz.felh.okx.v5.entity.ws.request.biz.EconomicCalendarArg.class,
+                            channel, message, wsChannel);
+            case ALGO_ORDERS -> pushData ?
+                    new WsSubscribePushHandler<>(AlgoOrderArg.class, AlgoOrder.class, channel, message, wsChannel) :
+                    new WsSubscribeHandler<>(xyz.felh.okx.v5.entity.ws.request.biz.AlgoOrderArg.class,
+                            channel, message, wsChannel);
+            case ADVANCE_ALGO_ORDERS -> pushData ?
+                    new WsSubscribePushHandler<>(AdvanceAlgoOrderArg.class, AdvanceAlgoOrder.class, channel, message, wsChannel) :
+                    new WsSubscribeHandler<>(xyz.felh.okx.v5.entity.ws.request.biz.AdvanceAlgoOrderArg.class,
+                            channel, message, wsChannel);
+            case GRID_ORDERS_SPOT -> pushData ?
+                    new WsSubscribePushHandler<>(GridOrderSpotArg.class, GridOrderSpot.class, channel, message, wsChannel) :
+                    new WsSubscribeHandler<>(xyz.felh.okx.v5.entity.ws.request.biz.GridOrderSpotArg.class,
+                            channel, message, wsChannel);
+            case GRID_ORDERS_CONTRACT -> pushData ?
+                    new WsSubscribePushHandler<>(GridOrderContractArg.class, GridOrderContract.class, channel, message, wsChannel) :
+                    new WsSubscribeHandler<>(xyz.felh.okx.v5.entity.ws.request.biz.GridOrderContractArg.class,
+                            channel, message, wsChannel);
+            case GRID_POSITIONS -> pushData ?
+                    new WsSubscribePushHandler<>(GridPositionsArg.class, GridPositions.class, channel, message, wsChannel) :
+                    new WsSubscribeHandler<>(xyz.felh.okx.v5.entity.ws.request.biz.GridPositionsArg.class,
+                            channel, message, wsChannel);
+            case GRID_SUB_ORDERS -> pushData ?
+                    new WsSubscribePushHandler<>(GridSubOrderArg.class, GridSubOrder.class, channel, message, wsChannel) :
+                    new WsSubscribeHandler<>(xyz.felh.okx.v5.entity.ws.request.biz.GridSubOrderArg.class,
                             channel, message, wsChannel);
         };
     }

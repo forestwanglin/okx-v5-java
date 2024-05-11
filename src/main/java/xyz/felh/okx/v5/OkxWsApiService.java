@@ -9,10 +9,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.WebSocket;
 import okio.ByteString;
-import xyz.felh.okx.v5.entity.ws.request.*;
+import xyz.felh.okx.v5.entity.ws.request.WsChannelRequestArg;
+import xyz.felh.okx.v5.entity.ws.request.WsOnceRequest;
+import xyz.felh.okx.v5.entity.ws.request.WsRequest;
+import xyz.felh.okx.v5.entity.ws.request.WsRequestArg;
 import xyz.felh.okx.v5.entity.ws.request.biz.*;
 import xyz.felh.okx.v5.entity.ws.request.pri.*;
 import xyz.felh.okx.v5.entity.ws.request.pub.*;
+import xyz.felh.okx.v5.enumeration.ws.Operation;
 import xyz.felh.okx.v5.enumeration.ws.WsChannel;
 import xyz.felh.okx.v5.util.SignUtils;
 import xyz.felh.okx.v5.ws.BusinessWsListener;
@@ -213,24 +217,24 @@ public class OkxWsApiService {
     }
 
     public void pureSubscribe(WsChannel wsChannel, WsChannelRequestArg requestArg) {
-        WsRequest wsRequest = WsRequest.builder()
+        WsRequest<WsRequestArg> wsRequest = WsRequest.builder()
                 .op(Operation.SUBSCRIBE)
                 .args(List.of(requestArg)).build();
         send(wsChannel, JSON.toJSONString(wsRequest));
     }
 
     private void unsubscribe(WsChannel wsChannel, WsChannelRequestArg requestArg) {
-        WsRequest wsRequest = WsRequest.builder()
+        WsRequest<WsRequestArg> wsRequest = WsRequest.builder()
                 .op(Operation.UNSUBSCRIBE)
                 .args(List.of(requestArg)).build();
         send(wsChannel, JSON.toJSONString(wsRequest));
     }
 
-    private void sendOnceRequest(WsChannel wsChannel, String id, Operation operation, WsRequestArg wsRequestArg) {
-        WsOnceRequest wsOnceRequest = WsOnceRequest.builder()
+    private void sendOnceRequest(WsChannel wsChannel, String id, Operation operation, WsRequestArg... wsRequestArgs) {
+        WsOnceRequest<WsRequestArg> wsOnceRequest = WsOnceRequest.builder()
                 .id(id)
                 .op(operation)
-                .args(List.of(wsRequestArg)).build();
+                .args(List.of(wsRequestArgs)).build();
         send(wsChannel, JSON.toJSONString(wsOnceRequest));
     }
 
@@ -241,7 +245,7 @@ public class OkxWsApiService {
             return;
         }
         loginArg.setSign(SignUtils.signWebsocket(loginArg, secretKey));
-        WsRequest wsRequest = WsRequest.builder()
+        WsRequest<WsRequestArg> wsRequest = WsRequest.builder()
                 .op(Operation.LOGIN)
                 .args(List.of(loginArg)).build();
         send(WsChannel.PRIVATE, JSON.toJSONString(wsRequest));
@@ -526,7 +530,85 @@ public class OkxWsApiService {
         unsubscribe(WsChannel.BUSINESS, economicCalendarArg);
     }
 
-    /**********  it is request and response once api below **********/
+    /**
+     * WS / Algo orders channel
+     *
+     * @param algoOrderArg algoOrderArg
+     */
+    public void subscribeAlgoOrder(AlgoOrderArg algoOrderArg) {
+        subscribe(WsChannel.BUSINESS, algoOrderArg);
+    }
+
+    public void unsubscribeAlgoOrder(AlgoOrderArg algoOrderArg) {
+        unsubscribe(WsChannel.BUSINESS, algoOrderArg);
+    }
+
+    /**
+     * WS / Advance algo orders channel
+     *
+     * @param advanceAlgoOrderArg advanceAlgoOrderArg
+     */
+    public void subscribeAdvanceAlgoOrder(AdvanceAlgoOrderArg advanceAlgoOrderArg) {
+        subscribe(WsChannel.BUSINESS, advanceAlgoOrderArg);
+    }
+
+    public void unsubscribeAdvanceAlgoOrder(AdvanceAlgoOrderArg advanceAlgoOrderArg) {
+        unsubscribe(WsChannel.BUSINESS, advanceAlgoOrderArg);
+    }
+
+    /**
+     * WS / Spot grid algo orders channel
+     *
+     * @param gridOrderSpotArg gridOrderSpotArg
+     */
+    public void subscribeGridOrderSpot(GridOrderSpotArg gridOrderSpotArg) {
+        subscribe(WsChannel.BUSINESS, gridOrderSpotArg);
+    }
+
+    public void unsubscribeGridOrderSpot(GridOrderSpotArg gridOrderSpotArg) {
+        unsubscribe(WsChannel.BUSINESS, gridOrderSpotArg);
+    }
+
+    /**
+     * WS / Contract grid algo orders channel
+     *
+     * @param gridOrderContractArg gridOrderContractArg
+     */
+    public void subscribeGridOrderContract(GridOrderContractArg gridOrderContractArg) {
+        subscribe(WsChannel.BUSINESS, gridOrderContractArg);
+    }
+
+    public void unsubscribeGridOrderContract(GridOrderContractArg gridOrderContractArg) {
+        unsubscribe(WsChannel.BUSINESS, gridOrderContractArg);
+    }
+
+    /**
+     * WS / Grid positions channel
+     *
+     * @param gridPositionsArg gridPositionsArg
+     */
+    public void subscribeGridPositions(GridPositionsArg gridPositionsArg) {
+        subscribe(WsChannel.BUSINESS, gridPositionsArg);
+    }
+
+    public void unsubscribeGridPositions(GridPositionsArg gridPositionsArg) {
+        unsubscribe(WsChannel.BUSINESS, gridPositionsArg);
+    }
+
+    /**
+     * WS / Grid sub orders channel
+     *
+     * @param gridSubOrderArg gridSubOrderArg
+     */
+    public void subscribeGridSubOrder(GridSubOrderArg gridSubOrderArg) {
+        subscribe(WsChannel.BUSINESS, gridSubOrderArg);
+    }
+
+    public void unsubscribeGridSubOrder(GridSubOrderArg gridSubOrderArg) {
+        unsubscribe(WsChannel.BUSINESS, gridSubOrderArg);
+    }
+
+    //**********  request and response once api below **********/
 
     // private channel
 
@@ -538,6 +620,66 @@ public class OkxWsApiService {
      */
     public void placeOrder(String id, PlaceOrderArg placeOrderArg) {
         sendOnceRequest(WsChannel.PRIVATE, id, Operation.ORDER, placeOrderArg);
+    }
+
+    /**
+     * WS / Place multiple orders
+     *
+     * @param id             id
+     * @param placeOrderArgs placeOrderArgs
+     */
+    public void placeOrders(String id, List<PlaceOrderArg> placeOrderArgs) {
+        sendOnceRequest(WsChannel.PRIVATE, id, Operation.BATCH_ORDERS, placeOrderArgs.toArray(new PlaceOrderArg[0]));
+    }
+
+    /**
+     * WS / Cancel order
+     *
+     * @param id             request id
+     * @param cancelOrderArg cancelOrderArg
+     */
+    public void cancelOrder(String id, CancelOrderArg cancelOrderArg) {
+        sendOnceRequest(WsChannel.PRIVATE, id, Operation.CANCEL_ORDER, cancelOrderArg);
+    }
+
+    /**
+     * WS / Cancel multiple orders
+     *
+     * @param id              id
+     * @param cancelOrderArgs cancelOrderArgs
+     */
+    public void cancelOrders(String id, List<CancelOrderArg> cancelOrderArgs) {
+        sendOnceRequest(WsChannel.PRIVATE, id, Operation.BATCH_CANCEL_ORDERS, cancelOrderArgs.toArray(new CancelOrderArg[0]));
+    }
+
+    /**
+     * WS / Amend order
+     *
+     * @param id            id
+     * @param amendOrderArg amendOrderArg
+     */
+    public void amendOrder(String id, AmendOrderArg amendOrderArg) {
+        sendOnceRequest(WsChannel.PRIVATE, id, Operation.AMEND_ORDER, amendOrderArg);
+    }
+
+    /**
+     * WS / Amend multiple orders
+     *
+     * @param id             id
+     * @param amendOrderArgs amendOrderArgs
+     */
+    public void amendOrders(String id, List<AmendOrderArg> amendOrderArgs) {
+        sendOnceRequest(WsChannel.PRIVATE, id, Operation.BATCH_AMEND_ORDERS, amendOrderArgs.toArray(new CancelOrderArg[0]));
+    }
+
+    /**
+     * WS / Mass cancel order
+     *
+     * @param id                 id
+     * @param massCancelOrderArg massCancelOrderArg
+     */
+    public void massCancelOrders(String id, MassCancelOrderArg massCancelOrderArg) {
+        sendOnceRequest(WsChannel.PRIVATE, id, Operation.MASS_CANCEL_ORDERS, massCancelOrderArg);
     }
 
 }

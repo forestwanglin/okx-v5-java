@@ -3,7 +3,7 @@ package xyz.felh.okx.v5.handler;
 import lombok.extern.slf4j.Slf4j;
 import xyz.felh.okx.v5.OkxWsApiService;
 import xyz.felh.okx.v5.WsMessageListener;
-import xyz.felh.okx.v5.entity.ws.request.Operation;
+import xyz.felh.okx.v5.enumeration.ws.Operation;
 import xyz.felh.okx.v5.entity.ws.response.WsOnceResponse;
 import xyz.felh.okx.v5.entity.ws.response.WsResponseArg;
 import xyz.felh.okx.v5.enumeration.ws.WsChannel;

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
-import xyz.felh.okx.v5.entity.ws.request.Operation;
+import xyz.felh.okx.v5.enumeration.ws.Operation;
 
 import java.util.List;
 

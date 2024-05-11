@@ -202,11 +202,83 @@ public abstract class WsMessageListener {
         log.debug("onReceiveEconomicCalendar: {}", response);
     }
 
+    public void onOperateAlgoOrders(@NonNull WsResponse<AlgoOrderArg> response) {
+        log.debug("onOperateAlgoOrders: {}", response);
+    }
+
+    public void onReceiveAlgoOrders(@NonNull WsSubscribeResponse<AlgoOrderArg, AlgoOrder> response) {
+        log.debug("onReceiveAlgoOrders: {}", response);
+    }
+
+    public void onOperateAdvanceAlgoOrders(@NonNull WsResponse<AdvanceAlgoOrderArg> response) {
+        log.debug("onOperateAdvanceAlgoOrders: {}", response);
+    }
+
+    public void onReceiveAdvanceAlgoOrders(@NonNull WsSubscribeResponse<AdvanceAlgoOrderArg, AdvanceAlgoOrder> response) {
+        log.debug("onReceiveAdvanceAlgoOrders: {}", response);
+    }
+
+    public void onOperateGridOrdersSpot(@NonNull WsResponse<GridOrderSpotArg> response) {
+        log.debug("onOperateGridOrdersSpot: {}", response);
+    }
+
+    public void onReceiveGridOrdersSpot(@NonNull WsSubscribeResponse<GridOrderSpotArg, GridOrderSpot> response) {
+        log.debug("onReceiveGridOrdersSpot: {}", response);
+    }
+
+    public void onOperateGridOrdersContract(@NonNull WsResponse<GridOrderContractArg> response) {
+        log.debug("onOperateGridOrdersContract: {}", response);
+    }
+
+    public void onReceiveGridOrdersContract(@NonNull WsSubscribeResponse<GridOrderContractArg, GridOrderContract> response) {
+        log.debug("onReceiveGridOrdersContract: {}", response);
+    }
+
+    public void onOperateGridPositions(@NonNull WsResponse<GridPositionsArg> response) {
+        log.debug("onOperateGridPositions: {}", response);
+    }
+
+    public void onReceiveGridPositions(@NonNull WsSubscribeResponse<GridPositionsArg, GridPositions> response) {
+        log.debug("onReceiveGridPositions: {}", response);
+    }
+
+    public void onOperateGridSubOrders(@NonNull WsResponse<GridSubOrderArg> response) {
+        log.debug("onOperateGridSubOrders: {}", response);
+    }
+
+    public void onReceiveGridSubOrders(@NonNull WsSubscribeResponse<GridSubOrderArg, GridSubOrder> response) {
+        log.debug("onReceiveGridSubOrders: {}", response);
+    }
+
     // once response
 
     // private
     public void onPlaceOrderResponse(@NonNull WsOnceResponse<PlaceOrderArg> response) {
         log.debug("onPlaceOrderResponse: {}", response);
+    }
+
+    public void onBatchPlaceOrdersResponse(@NonNull WsOnceResponse<PlaceOrderArg> response) {
+        log.debug("onBatchPlaceOrdersResponse: {}", response);
+    }
+
+    public void onCancelOrderResponse(@NonNull WsOnceResponse<CancelOrderArg> response) {
+        log.debug("onCancelOrderResponse: {}", response);
+    }
+
+    public void onBatchCancelOrdersResponse(@NonNull WsOnceResponse<CancelOrderArg> response) {
+        log.debug("onBatchCancelOrdersResponse: {}", response);
+    }
+
+    public void onAmendOrderResponse(@NonNull WsOnceResponse<AmendOrderArg> response) {
+        log.debug("onAmendOrderResponse: {}", response);
+    }
+
+    public void onBatchAmendOrdersResponse(@NonNull WsOnceResponse<AmendOrderArg> response) {
+        log.debug("onBatchAmendOrdersResponse: {}", response);
+    }
+
+    public void onMassCancelOrdersResponse(@NonNull WsOnceResponse<MassCancelOrderArg> response) {
+        log.debug("onMassCancelOrdersResponse: {}", response);
     }
 
 }

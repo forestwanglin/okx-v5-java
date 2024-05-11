@@ -5,13 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
-public class WsOnceRequest extends WsRequest {
+public class WsOnceRequest<T extends WsRequestArg> extends WsRequest<T> {
 
     /**
      * Unique identifier of the message
@@ -22,5 +23,12 @@ public class WsOnceRequest extends WsRequest {
     @JSONField(name = "id")
     @JsonProperty("id")
     private String id;
+
+    /**
+     * Request effective deadline. Unix timestamp format in milliseconds, e.g. 1597026383085
+     */
+    @JSONField(name = "expTime")
+    @JsonProperty("expTime")
+    private Long expTime;
 
 }

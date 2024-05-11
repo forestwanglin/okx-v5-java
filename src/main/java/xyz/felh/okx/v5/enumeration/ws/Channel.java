@@ -110,7 +110,7 @@ public enum Channel {
     ACCOUNT_GREEKS("account-greeks", "onOperateAccountGreeks", "onReceiveAccountGreeks"),
 
     /**
-     *获取订单信息，首次订阅不推送，只有当下单、撤单等事件触发时，推送数据
+     * 获取订单信息，首次订阅不推送，只有当下单、撤单等事件触发时，推送数据
      * 系统将限制订阅 WebSocket 频道的最大并发连接数。详情在限制 WebSocket 私有频道对应连接数量
      */
     ORDERS("orders", "onOperateOrders", "onReceiveOrders"),
@@ -202,6 +202,43 @@ public enum Channel {
      * 获取最新经济日历数据。 该频道仅开放给交易费等级VIP1及以上的用户。
      */
     ECONOMIC_CALENDAR("economic-calendar", "onOperateEconomicCalendar", "onReceiveEconomicCalendar"),
+
+    /**
+     * WS / Algo orders channel
+     * Retrieve algo orders (includes trigger order, oco order, conditional order). Data will not be pushed when first subscribed. Data will only be pushed when there are order updates.
+     */
+    ALGO_ORDERS("orders-algo", "onOperateAlgoOrders", "onReceiveAlgoOrders"),
+
+    /**
+     * WS / Advance algo orders channel
+     * <p>
+     * Retrieve advance algo orders (including Iceberg order, TWAP order, Trailing order). Data will be pushed when first subscribed. Data will be pushed when triggered by events such as placing/canceling order.
+     */
+    ADVANCE_ALGO_ORDERS("algo-advance", "onOperateAdvanceAlgoOrders", "onReceiveAdvanceAlgoOrders"),
+
+    /**
+     * WS / Spot grid algo orders channel
+     * Retrieve spot grid algo orders. Data will be pushed when triggered by events such as placing/canceling order. It will also be pushed in regular interval according to subscription granularity.
+     */
+    GRID_ORDERS_SPOT("grid-orders-spot", "onOperateGridOrdersSpot", "onReceiveGridOrdersSpot"),
+
+    /**
+     * WS / Contract grid algo orders channel
+     * <p>
+     * Retrieve contract grid algo orders. Data will be pushed when triggered by events such as placing/canceling order. It will also be pushed in regular interval according to subscription granularity.
+     */
+    GRID_ORDERS_CONTRACT("grid-orders-contract", "onOperateGridOrdersContract", "onReceiveGridOrdersContract"),
+
+    /**
+     * WS / Grid positions channel
+     * Retrieve grid positions. Data will be pushed when triggered by events such as placing/canceling order.
+     */
+    GRID_POSITIONS("grid-positions", "onOperateGridPositions", "onReceiveGridPositions"),
+    /**
+     * WS / Grid sub orders channel
+     * Retrieve grid sub orders. Data will be pushed when triggered by events such as placing order.
+     */
+    GRID_SUB_ORDERS("grid-sub-orders", "onOperateGridSubOrders", "onReceiveGridSubOrders"),
     ;
 
     private final String value;

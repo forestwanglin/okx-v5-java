@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import xyz.felh.okx.v5.entity.ws.biz.IndexCandlesticks;
 import xyz.felh.okx.v5.entity.ws.pri.Account;
 import xyz.felh.okx.v5.entity.ws.pub.OpenInterest;
-import xyz.felh.okx.v5.entity.ws.request.Operation;
+import xyz.felh.okx.v5.enumeration.ws.Operation;
 import xyz.felh.okx.v5.entity.ws.request.WsRequest;
 import xyz.felh.okx.v5.entity.ws.request.pri.LoginArg;
 import xyz.felh.okx.v5.entity.ws.request.pri.PlaceOrderArg;

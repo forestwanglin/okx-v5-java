@@ -171,11 +171,4 @@ public class PlaceOrderArg implements WsRequestArg {
     @JsonProperty("stpMode")
     private StpMode stpMode;
 
-    /**
-     * Request effective deadline. Unix timestamp format in milliseconds, e.g. 1597026383085
-     */
-    @JSONField(name = "expTime")
-    @JsonProperty("expTime")
-    private Long expTime;
-
 }
