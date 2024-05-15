@@ -207,7 +207,7 @@ public class OkxWsApiService {
 
     // below is the api logic
 
-    private void subscribe(WsChannel wsChannel, WsChannelRequestArg requestArg) {
+    protected void subscribe(WsChannel wsChannel, WsChannelRequestArg requestArg) {
         if (!subscribeStateService.hasSubscribed(wsChannel, requestArg)) {
             pureSubscribe(wsChannel, requestArg);
             subscribeStateService.addSubscribed(wsChannel, requestArg);
@@ -223,7 +223,7 @@ public class OkxWsApiService {
         send(wsChannel, JSON.toJSONString(wsRequest));
     }
 
-    private void unsubscribe(WsChannel wsChannel, WsChannelRequestArg requestArg) {
+    protected void unsubscribe(WsChannel wsChannel, WsChannelRequestArg requestArg) {
         WsRequest<WsRequestArg> wsRequest = WsRequest.builder()
                 .op(Operation.UNSUBSCRIBE)
                 .args(List.of(requestArg)).build();

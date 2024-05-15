@@ -6,7 +6,7 @@
 
     <groupId>xyz.felh</groupId>
     <artifactId>okx-v5-java</artifactId>
-    <version>0.4.2024051101</version>
+    <version>0.4.2024051501</version>
     <packaging>jar</packaging>
 
     <name>okx api v5 for java</name>
