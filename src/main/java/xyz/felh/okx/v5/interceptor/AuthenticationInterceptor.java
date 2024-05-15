@@ -42,7 +42,6 @@ public class AuthenticationInterceptor implements Interceptor {
         if (method.equalsIgnoreCase("POST")) {
             body = bodyToString(chain.request().body());
         }
-        log.info("body {}", body);
         String sign = SignUtils.signRest(secretKey,
                 timestamp,
                 method,
@@ -63,10 +62,9 @@ public class AuthenticationInterceptor implements Interceptor {
 
     private static String bodyToString(final RequestBody request) {
         try {
-            final RequestBody copy = request;
             final Buffer buffer = new Buffer();
-            if (copy != null) {
-                copy.writeTo(buffer);
+            if (request != null) {
+                request.writeTo(buffer);
             } else {
                 return EMPTY;
             }
