@@ -69,7 +69,7 @@ public class WsOnceResponse<T> implements IWsResponse {
 
     public static <T> WsOnceResponse<T> tryParse(Class<T> tClass, String message) {
         try {
-            return JSONObject.parseObject(message, new TypeReference<>() {
+            return JSONObject.parseObject(message, new TypeReference<>(tClass) {
             });
         } catch (Exception ex) {
             log.error("tryParse error", ex);

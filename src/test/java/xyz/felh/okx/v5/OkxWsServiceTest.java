@@ -107,10 +107,10 @@ public class OkxWsServiceTest {
 //        wsApiService.subscribeAccount(AccountArg.builder()
 //                .ccy("BTC")
 //                .build());
-        TimeUnit.SECONDS.sleep(5L);
-        wsApiService.subscribeOpenInterest(OpenInterestArg.builder()
-                .instId("LTC-USD-SWAP")
-                .build());
+//        TimeUnit.SECONDS.sleep(5L);
+//        wsApiService.subscribeOpenInterest(OpenInterestArg.builder()
+//                .instId("LTC-USD-SWAP")
+//                .build());
 //        TimeUnit.SECONDS.sleep(5L);
 //        wsApiService.subscribeOpenInterest(OpenInterestArg.builder()
 //                .instId("BTC-USD-SWAP")
@@ -123,10 +123,10 @@ public class OkxWsServiceTest {
 //        wsApiService.subscribeOpenInterest(OpenInterestArg.builder()
 //                .instId("LTC-USD-SWAP")
 //                .build());
-//        TimeUnit.SECONDS.sleep(10L);
-//        wsApiService.unsubscribeOpenInterest(OpenInterestArg.builder()
-//                .instId("LTC-USD-SWAP")
-//                .build());
+        TimeUnit.SECONDS.sleep(10L);
+        wsApiService.unsubscribeOpenInterest(OpenInterestArg.builder()
+                .instId("LTC-USD-SWAP")
+                .build());
         TimeUnit.SECONDS.sleep(5);
         // 模拟盘
         String apiKey = System.getenv("API_KEY");

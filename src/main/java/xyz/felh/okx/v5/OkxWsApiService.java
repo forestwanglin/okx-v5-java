@@ -170,7 +170,8 @@ public class OkxWsApiService {
     public void send(WsChannel wsChannel, final String message) {
         log.info("send message: {} {}", wsChannel, message);
         if (!isConnected(wsChannel)) {
-            log.info("websocket not connected: {}", wsChannel);
+            log.info("websocket not connected: {}, try reconnect", wsChannel);
+            reconnect(wsChannel);
             return;
         }
         wsClientMap.get(wsChannel).send(message);
@@ -669,7 +670,7 @@ public class OkxWsApiService {
      * @param amendOrderArgs amendOrderArgs
      */
     public void amendOrders(String id, List<AmendOrderArg> amendOrderArgs) {
-        sendOnceRequest(WsChannel.PRIVATE, id, Operation.BATCH_AMEND_ORDERS, amendOrderArgs.toArray(new CancelOrderArg[0]));
+        sendOnceRequest(WsChannel.PRIVATE, id, Operation.BATCH_AMEND_ORDERS, amendOrderArgs.toArray(new AmendOrderArg[0]));
     }
 
     /**
