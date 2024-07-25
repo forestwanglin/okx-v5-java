@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient;
 import org.junit.jupiter.api.Test;
 import xyz.felh.okx.v5.entity.rest.trading.order.booking.PlaceOrderReq;
 import xyz.felh.okx.v5.entity.ws.pri.Order;
+import xyz.felh.okx.v5.enumeration.AlgoOrderType;
 import xyz.felh.okx.v5.enumeration.OrderType;
 import xyz.felh.okx.v5.enumeration.Side;
 import xyz.felh.okx.v5.enumeration.ws.TdMode;
@@ -64,6 +65,15 @@ public class OkxServiceTest {
 //                .build());
 
 
+        log.info("test: {}", response);
+    }
+
+    @Test
+    public void getAiParam() {
+        OkxApiService service = getOkxService();
+        var response = service.getGridAiParameterPublic(
+                AlgoOrderType.GRID,
+                "BTC-USDT", null, "7D");
         log.info("test: {}", response);
     }
 

@@ -13,10 +13,6 @@ import xyz.felh.okx.v5.entity.rest.trading.order.booking.CancelOrderReq;
 import xyz.felh.okx.v5.entity.rest.trading.order.booking.CancelOrderRsp;
 import xyz.felh.okx.v5.entity.rest.trading.order.booking.PlaceOrderReq;
 import xyz.felh.okx.v5.entity.rest.trading.order.booking.PlaceOrderRsp;
-import xyz.felh.okx.v5.enumeration.AlgoOrderType;
-import xyz.felh.okx.v5.enumeration.ContractDirection;
-import xyz.felh.okx.v5.enumeration.InstrumentType;
-import xyz.felh.okx.v5.enumeration.TriggerCondition;
 
 /**
  * Retrofit2 API interface
@@ -159,10 +155,10 @@ public interface OkxApi {
      */
     @GET("/api/v5/tradingBot/grid/orders-algo-pending")
     Single<OkxRestResponse<GridAlgoOrder>> getGridAlgoOrderList(
-            @Query("algoOrdType") AlgoOrderType algoOrdType,
+            @Query("algoOrdType") String algoOrdType,
             @Query("algoId") String algoId,
             @Query("instId") String instId,
-            @Query("instType") InstrumentType instType,
+            @Query("instType") String instType,
             @Query("after") String after,
             @Query("before") String before,
             @Query("limit") Integer limit
@@ -191,10 +187,10 @@ public interface OkxApi {
      */
     @GET("/api/v5/tradingBot/grid/orders-algo-history")
     Single<OkxRestResponse<GridAlgoOrder>> getGridAlgoOrderHistory(
-            @Query("algoOrdType") AlgoOrderType algoOrdType,
+            @Query("algoOrdType") String algoOrdType,
             @Query("algoId") String algoId,
             @Query("instId") String instId,
-            @Query("instType") InstrumentType instType,
+            @Query("instType") String instType,
             @Query("after") String after,
             @Query("before") String before,
             @Query("limit") Integer limit);
@@ -212,7 +208,7 @@ public interface OkxApi {
      */
     @GET("/api/v5/tradingBot/grid/orders-algo-details")
     Single<OkxRestResponse<GridAlgoOrder>> getGridAlgoOrderDetails(
-            @Query("algoOrdType") AlgoOrderType algoOrdType,
+            @Query("algoOrdType") String algoOrdType,
             @Query("algoId") String algoId);
 
     /**
@@ -235,7 +231,7 @@ public interface OkxApi {
      */
     @GET("/api/v5/tradingBot/grid/sub-orders")
     Single<OkxRestResponse<GridAlgoSubOrder>> getGridAlgoSubOrders(
-            @Query("algoOrdType") AlgoOrderType algoOrdType,
+            @Query("algoOrdType") String algoOrdType,
             @Query("algoId") String algoId,
             @Query("type") String type,
             @Query("groupId") String groupId,
@@ -255,7 +251,7 @@ public interface OkxApi {
      */
     @GET("/api/v5/tradingBot/grid/positions")
     Single<OkxRestResponse<GridAlgoOrderPosition>> getGridAlgoOrderPositions(
-            @Query("algoOrdType") AlgoOrderType algoOrdType,
+            @Query("algoOrdType") String algoOrdType,
             @Query("algoId") String algoId);
 
     /**
@@ -326,9 +322,9 @@ public interface OkxApi {
      */
     @GET("/api/v5/tradingBot/grid/ai-param")
     Single<OkxRestResponse<GridApiParam>> getGridAiParameterPublic(
-            @Query("algoOrdType") AlgoOrderType algoOrdType,
+            @Query("algoOrdType") String algoOrdType,
             @Query("instId") String instId,
-            @Query("direction") ContractDirection direction,
+            @Query("direction") String direction,
             @Query("duration") String duration);
 
     /**
@@ -379,7 +375,7 @@ public interface OkxApi {
             @Query("timeframe") String timeframe,
             @Query("thold") Integer thold,
             @Query("timePeriod") Integer timePeriod,
-            @Query("triggerCond") TriggerCondition triggerCond,
+            @Query("triggerCond") String triggerCond,
             @Query("duration") String duration);
 
 

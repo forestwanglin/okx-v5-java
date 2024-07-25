@@ -244,7 +244,7 @@ public class OkxApiService {
             String after,
             String before,
             Integer limit) {
-        return execute(api.getGridAlgoOrderHistory(algoOrdType, algoId, instId, instType, after, before, limit));
+        return execute(api.getGridAlgoOrderList(algoOrdType.getValue(), algoId, instId, instType.getValue(), after, before, limit));
     }
 
     /**
@@ -273,7 +273,7 @@ public class OkxApiService {
             String after,
             String before,
             Integer limit) {
-        return execute(api.getGridAlgoOrderHistory(algoOrdType, algoId, instId, instType, after, before, limit));
+        return execute(api.getGridAlgoOrderHistory(algoOrdType.getValue(), algoId, instId, instType.getValue(), after, before, limit));
     }
 
     /**
@@ -285,10 +285,8 @@ public class OkxApiService {
      * @param algoId      策略订单ID
      * @return GridAlgoOrder
      */
-    public OkxRestResponse<GridAlgoOrder> getGridAlgoOrderDetails(
-            AlgoOrderType algoOrdType,
-            String algoId) {
-        return execute(api.getGridAlgoOrderDetails(algoOrdType, algoId));
+    public OkxRestResponse<GridAlgoOrder> getGridAlgoOrderDetails(AlgoOrderType algoOrdType, String algoId) {
+        return execute(api.getGridAlgoOrderDetails(algoOrdType.getValue(), algoId));
     }
 
     /**
@@ -315,7 +313,7 @@ public class OkxApiService {
             String after,
             String before,
             Integer limit) {
-        return execute(api.getGridAlgoSubOrders(algoOrdType, algoId, type, groupId, after, before, limit));
+        return execute(api.getGridAlgoSubOrders(algoOrdType.getValue(), algoId, type, groupId, after, before, limit));
     }
 
     /**
@@ -326,10 +324,8 @@ public class OkxApiService {
      * @param algoId      策略订单ID
      * @return GridAlgoOrderPosition
      */
-    public OkxRestResponse<GridAlgoOrderPosition> getGridAlgoOrderPositions(
-            AlgoOrderType algoOrdType,
-            String algoId) {
-        return execute(api.getGridAlgoOrderPositions(algoOrdType, algoId));
+    public OkxRestResponse<GridAlgoOrderPosition> getGridAlgoOrderPositions(AlgoOrderType algoOrdType, String algoId) {
+        return execute(api.getGridAlgoOrderPositions(algoOrdType.getValue(), algoId));
     }
 
     /**
@@ -395,7 +391,7 @@ public class OkxApiService {
             String instId,
             ContractDirection direction,
             String duration) {
-        return execute(api.getGridAiParameterPublic(algoOrdType, instId, direction, duration));
+        return execute(api.getGridAiParameterPublic(algoOrdType.getValue(), instId, direction.getValue(), duration));
     }
 
     /**
@@ -442,7 +438,7 @@ public class OkxApiService {
             Integer timePeriod,
             TriggerCondition triggerCond,
             String duration) {
-        return execute(api.getRsiBackTestingPublic(instId, timeframe, thold, timePeriod, triggerCond, duration));
+        return execute(api.getRsiBackTestingPublic(instId, timeframe, thold, timePeriod, triggerCond.getValue(), duration));
     }
 
 
