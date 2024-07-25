@@ -244,7 +244,13 @@ public class OkxApiService {
             String after,
             String before,
             Integer limit) {
-        return execute(api.getGridAlgoOrderList(algoOrdType.getValue(), algoId, instId, instType.getValue(), after, before, limit));
+        return execute(api.getGridAlgoOrderList(algoOrdType.getValue(),
+                algoId,
+                instId,
+                instType != null ? instType.getValue() : null,
+                after,
+                before,
+                limit));
     }
 
     /**
@@ -273,7 +279,13 @@ public class OkxApiService {
             String after,
             String before,
             Integer limit) {
-        return execute(api.getGridAlgoOrderHistory(algoOrdType.getValue(), algoId, instId, instType.getValue(), after, before, limit));
+        return execute(api.getGridAlgoOrderHistory(algoOrdType.getValue(),
+                algoId,
+                instId,
+                instType != null ? instType.getValue() : null,
+                after,
+                before,
+                limit));
     }
 
     /**
@@ -391,7 +403,10 @@ public class OkxApiService {
             String instId,
             ContractDirection direction,
             String duration) {
-        return execute(api.getGridAiParameterPublic(algoOrdType.getValue(), instId, direction.getValue(), duration));
+        return execute(api.getGridAiParameterPublic(algoOrdType.getValue(),
+                instId,
+                direction != null ? direction.getValue() : null,
+                duration));
     }
 
     /**
@@ -438,7 +453,12 @@ public class OkxApiService {
             Integer timePeriod,
             TriggerCondition triggerCond,
             String duration) {
-        return execute(api.getRsiBackTestingPublic(instId, timeframe, thold, timePeriod, triggerCond.getValue(), duration));
+        return execute(api.getRsiBackTestingPublic(instId,
+                timeframe,
+                thold,
+                timePeriod,
+                triggerCond != null ? triggerCond.getValue() : null,
+                duration));
     }
 
 
