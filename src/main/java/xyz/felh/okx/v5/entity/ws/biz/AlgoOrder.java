@@ -6,7 +6,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import xyz.felh.okx.v5.entity.ws.WsSubscribeEntity;
 import xyz.felh.okx.v5.enumeration.*;
-import xyz.felh.okx.v5.enumeration.ws.InstrumentType;
+import xyz.felh.okx.v5.enumeration.InstrumentType;
 import xyz.felh.okx.v5.enumeration.ws.TdMode;
 
 import java.math.BigDecimal;

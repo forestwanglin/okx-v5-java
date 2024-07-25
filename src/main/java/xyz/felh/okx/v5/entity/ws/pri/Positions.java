@@ -9,7 +9,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import xyz.felh.okx.v5.entity.ws.IOkxWsObject;
 import xyz.felh.okx.v5.entity.ws.WsSubscribeEntity;
-import xyz.felh.okx.v5.enumeration.ws.InstrumentType;
+import xyz.felh.okx.v5.enumeration.InstrumentType;
 import xyz.felh.okx.v5.enumeration.ws.MgnMode;
 import xyz.felh.okx.v5.enumeration.PositionsSide;
 import xyz.felh.okx.v5.enumeration.TriggerPxType;

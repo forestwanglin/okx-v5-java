@@ -1,5 +1,5 @@
 # okx-v5-java
-[![GitHub version](https://img.shields.io/static/v1?label=version&message=v0.4.2024071601&color=blue)](https://github.com/forestwanglin/okx-v5-java)
+[![GitHub version](https://img.shields.io/static/v1?label=version&message=v0.5.2024072501&color=blue)](https://github.com/forestwanglin/okx-v5-java)
 [![License](https://img.shields.io/static/v1?label=license&message=MIT&color=orange)](https://github.com/forestwanglin/okx-v5-java/blob/main/LICENSE)
 
 OKX v5 SDK for JAVA. 
@@ -30,6 +30,25 @@ I am going to implement all APIs on the [official api document](https://www.okx.
       - [ ] [POST / Amend multiple orders](https://www.okx.com/docs-v5/en/#order-book-trading-trade-post-amend-multiple-orders)
       - [ ] [POST / Close positions](https://www.okx.com/docs-v5/en/#order-book-trading-trade-post-close-positions)
       - [ ] ...
+    - [Grid Trading](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading)
+      - [x] [POST / Place grid algo order](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-post-place-grid-algo-order)
+      - [x] [POST / Amend grid algo order](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-post-amend-grid-algo-order)
+      - [x] [POST / Stop grid algo order](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-post-stop-grid-algo-order)
+      - [x] [POST / Close position for contract grid](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-post-close-position-for-contract-grid)
+      - [x] [POST / Cancel close position order for contract grid](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-post-cancel-close-position-order-for-contract-grid)
+      - [x] [POST / Instant trigger grid algo order](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-post-instant-trigger-grid-algo-order)
+      - [x] [GET / Grid algo order list](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-get-grid-algo-order-list)
+      - [x] [GET / Grid algo order history](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-get-grid-algo-order-history)
+      - [x] [GET / Grid algo order details](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-get-grid-algo-order-details)
+      - [x] [GET / Grid algo sub orders](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-get-grid-algo-sub-orders)
+      - [x] [GET / Grid algo order positions](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-get-grid-algo-order-positions)
+      - [x] [POST / Spot grid withdraw income](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-post-spot-grid-withdraw-income)
+      - [x] [POST / Compute margin balance](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-post-compute-margin-balance)
+      - [x] [POST / Adjust margin balance](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-post-adjust-margin-balance)
+      - [x] [POST / Add investment](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-post-add-investment)
+      - [x] [GET / Grid AI parameter (public)](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-get-grid-ai-parameter-public)
+      - [x] [POST / Compute min investment (public)](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-post-compute-min-investment-public)
+      - [x] [GET / RSI back testing (public)](https://www.okx.com/docs-v5/en/#order-book-trading-grid-trading-get-rsi-back-testing-public)
 - ### Websocket API
   - [Trading Account](https://www.okx.com/docs-v5/zh/#trading-account-websocket)
     - [x] [Account channel](https://www.okx.com/docs-v5/en/#trading-account-websocket-account-channel)
@@ -82,20 +101,20 @@ I am going to implement all APIs on the [official api document](https://www.okx.
 <dependency>
     <groupId>xyz.felh</groupId>
     <artifactId>okx-v5-java</artifactId>
-    <version>0.4.2024071601</version>
+    <version>0.5.2024072501</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```yaml
-implementation group: 'xyz.felh', name: 'okx-v5-java', version: '0.4.2024071601'
+implementation group: 'xyz.felh', name: 'okx-v5-java', version: '0.5.2024072501'
 ```
 
 ### sbt
 
 ```javascript
-libraryDependencies += "xyz.felh" % "okx-v5-java" % "0.4.2024071601"
+libraryDependencies += "xyz.felh" % "okx-v5-java" % "0.5.2024072501"
 ```
 
 ## Important

@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import xyz.felh.okx.v5.entity.ws.WsSubscribeEntity;
-import xyz.felh.okx.v5.enumeration.OrderState;
-import xyz.felh.okx.v5.enumeration.ws.*;
+import xyz.felh.okx.v5.enumeration.*;
 
 import java.math.BigDecimal;
 import java.util.List;

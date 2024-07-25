@@ -3,6 +3,7 @@ package xyz.felh.okx.v5;
 import com.alibaba.fastjson2.JSON;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.OkHttpClient;
 import org.junit.jupiter.api.Test;
 import xyz.felh.okx.v5.entity.ws.biz.IndexCandlesticks;
 import xyz.felh.okx.v5.entity.ws.pri.Account;
@@ -21,19 +22,29 @@ import xyz.felh.okx.v5.entity.ws.response.biz.IndexCandlesticksArg;
 import xyz.felh.okx.v5.enumeration.OrderType;
 import xyz.felh.okx.v5.enumeration.Side;
 import xyz.felh.okx.v5.enumeration.ws.Channel;
-import xyz.felh.okx.v5.enumeration.ws.InstrumentType;
+import xyz.felh.okx.v5.enumeration.InstrumentType;
 import xyz.felh.okx.v5.enumeration.ws.TdMode;
 import xyz.felh.okx.v5.enumeration.ws.WsChannel;
 
 import java.math.BigDecimal;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static xyz.felh.okx.v5.OkxWsApiService.defaultClient;
 
 @Slf4j
 public class OkxWsServiceTest {
 
     private OkxWsApiService getOkxWsService() {
-        return new OkxWsApiService(true);
+        Proxy proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress("127.0.0.1", 7890));
+        OkHttpClient client = defaultClient(Duration.ofMillis(300000))
+                .newBuilder()
+                .proxy(proxy)
+                .build();
+        return new OkxWsApiService(client, true);
     }
 
     @Test

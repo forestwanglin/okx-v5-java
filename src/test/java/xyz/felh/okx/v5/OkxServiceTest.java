@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.OkHttpClient;
 import org.junit.jupiter.api.Test;
 import xyz.felh.okx.v5.entity.rest.trading.order.booking.PlaceOrderReq;
 import xyz.felh.okx.v5.entity.ws.pri.Order;
@@ -14,6 +15,12 @@ import xyz.felh.okx.v5.enumeration.Side;
 import xyz.felh.okx.v5.enumeration.ws.TdMode;
 
 import java.math.BigDecimal;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.time.Duration;
+
+import static xyz.felh.okx.v5.OkxApiService.buildApi;
+import static xyz.felh.okx.v5.OkxApiService.defaultClient;
 
 @Slf4j
 public class OkxServiceTest {
@@ -23,7 +30,14 @@ public class OkxServiceTest {
         String apiKey = System.getenv("API_KEY");
         String passphrase = System.getenv("PASSPHRASE");
         String secretKey = System.getenv("SECRET_KEY");
-        return new OkxApiService(apiKey, secretKey, passphrase, true);
+        Duration defaultTimeout = Duration.ofSeconds(30);
+        boolean simulated = true;
+        Proxy proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress("127.0.0.1", 7890));
+        OkHttpClient client = defaultClient(apiKey, secretKey, passphrase, simulated, defaultTimeout)
+                .newBuilder()
+                .proxy(proxy)
+                .build();
+        return new OkxApiService(buildApi(apiKey, secretKey, passphrase, simulated, defaultTimeout), client, simulated);
     }
 
     @Test

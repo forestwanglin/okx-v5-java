@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import xyz.felh.okx.v5.entity.ws.response.WsResponseArg;
-import xyz.felh.okx.v5.enumeration.ws.InstrumentType;
 
 @Data
 @ToString(callSuper = true)
