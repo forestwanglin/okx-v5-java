@@ -65,7 +65,7 @@ public class OkxWsServiceTest {
         OkxWsApiService wsApiService = getOkxWsService();
         wsApiService.connect(WsChannel.PUBLIC);
         wsApiService.connect(WsChannel.PRIVATE);
-//        wsApiService.connect(WsChannel.BUSINESS);
+        wsApiService.connect(WsChannel.BUSINESS);
 
         wsApiService.setWsMessageListener(new WsMessageListener() {
 
@@ -150,14 +150,6 @@ public class OkxWsServiceTest {
                 .build(), secretKey);
 
         TimeUnit.SECONDS.sleep(5);
-
-        wsApiService.placeOrder("aaa", PlaceOrderArg.builder()
-                .sz(BigDecimal.ONE)
-                .ordType(OrderType.LIMIT)
-                .side(Side.SELL)
-                .tdMode(TdMode.CASH)
-                .instId("BTC-USDT")
-                .build());
 
 //        wsApiService.subscribeAccount(AccountArg.builder()
 //                .ccy("BTC")

@@ -12,6 +12,7 @@ import xyz.felh.okx.v5.enumeration.ws.WsChannel;
 import xyz.felh.okx.v5.handler.WsHandler;
 import xyz.felh.okx.v5.handler.WsHandlerFactory;
 
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -25,10 +26,12 @@ public abstract class FelhWsListener extends WebSocketListener {
 
     protected final OkxWsApiService okxWsApiService;
     private final WsChannel wsChannel;
+    private ScheduledFuture<?> heartbeatFuture;
 
     public FelhWsListener(WsChannel wsChannel, OkxWsApiService okxWsApiService) {
         this.okxWsApiService = okxWsApiService;
         this.wsChannel = wsChannel;
+        this.heartbeatFuture = null;
     }
 
     @Override
@@ -49,6 +52,16 @@ public abstract class FelhWsListener extends WebSocketListener {
 
     protected void afterConnected() {
         //
+    }
+
+    private void afterDisconnected() {
+        if (heartbeatFuture != null && !heartbeatFuture.isCancelled()) {
+            // cancel heartbeat
+            log.info("cancel heart beat");
+            heartbeatFuture.cancel(true);
+        }
+        // 试着重连
+        okxWsApiService.reconnect(wsChannel);
     }
 
     @Override
@@ -75,6 +88,7 @@ public abstract class FelhWsListener extends WebSocketListener {
         okxWsApiService.setWebSocket(wsChannel, null);
         okxWsApiService.resetConnectCount(wsChannel);
         okxWsApiService.setConnectState(wsChannel, false);
+        afterDisconnected();
     }
 
     @Override
@@ -83,16 +97,18 @@ public abstract class FelhWsListener extends WebSocketListener {
         okxWsApiService.setWebSocket(wsChannel, null);
         okxWsApiService.resetConnectCount(wsChannel);
         okxWsApiService.setConnectState(wsChannel, false);
+        afterDisconnected();
     }
 
     @Override
     public void onFailure(@NotNull WebSocket webSocket, @NotNull Throwable t, @Nullable Response response) {
-        log.info("onFailure: {} {} {} {}", wsChannel, webSocket, t, response);
+        log.error("onFailure: {} {} {}", wsChannel, webSocket, response, t);
         okxWsApiService.setWebSocket(wsChannel, null);
         okxWsApiService.setConnectState(wsChannel, false);
-        if (t.getMessage() != null && t.getMessage().equals("Socket closed")) {
-            okxWsApiService.reconnect(wsChannel);
-        }
+        afterDisconnected();
+//        if (t.getMessage() != null && t.getMessage().equals("Socket closed")) {
+//            okxWsApiService.reconnect(wsChannel);
+//        }
     }
 
     /**
@@ -104,9 +120,10 @@ public abstract class FelhWsListener extends WebSocketListener {
             thread.setDaemon(true);
             return thread;
         });
-        executor.scheduleWithFixedDelay(
+        heartbeatFuture = executor.scheduleWithFixedDelay(
                 () -> okxWsApiService.send(wsChannel, HEARTBEAT_REQ_MESSAGE),
                 HEARTBEAT_INTERVAL_SEC, HEARTBEAT_INTERVAL_SEC, TimeUnit.SECONDS);
+
     }
 
 }

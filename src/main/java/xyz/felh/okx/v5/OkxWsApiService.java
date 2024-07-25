@@ -37,7 +37,7 @@ public class OkxWsApiService {
 
     private static final int PING_INTERVAL_SEC = 300;
     private static final int MAX_RECONNECT_COUNT = 5;
-    private static final int RECONNECT_INTERVAL = 5000;
+    private static final int RECONNECT_INTERVAL = 10000;
 
     private final OkHttpClient client;
     private final boolean simulated;
@@ -121,7 +121,7 @@ public class OkxWsApiService {
             if (wsChannel == WsChannel.PRIVATE) {
                 hasLogin = false;
             }
-            log.debug("reconnect: {} count: {}", wsChannel, reconnectCountMap.get(wsChannel));
+            log.info("reconnect: {} count: {}", wsChannel, reconnectCountMap.get(wsChannel));
             if (reconnectCountMap.get(wsChannel) < MAX_RECONNECT_COUNT) {
                 TimeUnit.MILLISECONDS.sleep(RECONNECT_INTERVAL);
                 connect(wsChannel);
