@@ -168,7 +168,7 @@ public class OkxWsApiService {
      * @param message   message
      */
     public void send(WsChannel wsChannel, final String message) {
-        log.info("send message: {} {}", wsChannel, message);
+        log.debug("send message: {} {}", wsChannel, message);
         if (!isConnected(wsChannel)) {
             log.info("websocket not connected: {}, try reconnect", wsChannel);
             reconnect(wsChannel);
