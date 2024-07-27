@@ -1,5 +1,5 @@
 # okx-v5-java
-[![GitHub version](https://img.shields.io/static/v1?label=version&message=v0.5.2024072504&color=blue)](https://github.com/forestwanglin/okx-v5-java)
+[![GitHub version](https://img.shields.io/static/v1?label=version&message=v0.5.2024072701&color=blue)](https://github.com/forestwanglin/okx-v5-java)
 [![License](https://img.shields.io/static/v1?label=license&message=MIT&color=orange)](https://github.com/forestwanglin/okx-v5-java/blob/main/LICENSE)
 
 OKX v5 SDK for JAVA. 
@@ -101,20 +101,20 @@ I am going to implement all APIs on the [official api document](https://www.okx.
 <dependency>
     <groupId>xyz.felh</groupId>
     <artifactId>okx-v5-java</artifactId>
-    <version>0.5.2024072504</version>
+    <version>0.5.2024072701</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```yaml
-implementation group: 'xyz.felh', name: 'okx-v5-java', version: '0.5.2024072504'
+implementation group: 'xyz.felh', name: 'okx-v5-java', version: '0.5.2024072701'
 ```
 
 ### sbt
 
 ```javascript
-libraryDependencies += "xyz.felh" % "okx-v5-java" % "0.5.2024072504"
+libraryDependencies += "xyz.felh" % "okx-v5-java" % "0.5.2024072701"
 ```
 
 ## Important

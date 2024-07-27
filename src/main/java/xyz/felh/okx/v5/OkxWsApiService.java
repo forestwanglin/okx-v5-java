@@ -184,7 +184,7 @@ public class OkxWsApiService {
      * @param message   message
      */
     public void send(WsChannel wsChannel, final ByteString message) {
-        log.info("send byteMessage: {} {}", wsChannel, message);
+        log.debug("send byteMessage: {} {}", wsChannel, message);
         if (!isConnected(wsChannel)) {
             return;
         }
